@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    UserIndexScrollTop: 0,
+    UserIndexUserinfo: null
   },
   mutations: {
 
