@@ -1,87 +1,83 @@
 <template>
   <div class="live">
-    2131231
-    <!-- <Header :name="channels[now].name"></Header>
-    <video ref="video" class="live-video" :src="channels[now].m3u8" :poster="channels[now].headpic" controls x5-video-player-type="h5"></video>
-    <div class="live-origin">直播源地址：{{channels[now].m3u8}}</div>
-    <div class="channellist">
-      <UserItem @changechannel="changechannel" v-for="(item, index) in channels" :index="index" :key="index" v-show="index != now" :channel="item"></UserItem>
-      <WatchMore :name="name"></WatchMore>
+    <video v-if="show" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" class="video-player"></video>
+    <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
+      <LiveInfo :userInfo="userInfo"></LiveInfo>
+      <Play class="play" @clicked="play"></Play>
+      <LiveChat></LiveChat>
     </div>
-    <div @click="toindex" class="back">×</div> -->
+    <SwiperNav class="swiper-nav" :navlist="navlist" :activeClass="activeClass" @change="change"></SwiperNav>
+    <LiveRecommendSwiper :activeClass="activeClass" @slide="slider"></LiveRecommendSwiper>
+    <Header class="header"></Header>
   </div>
 </template>
 
 <script>
-import UserItem from '../components/Public/UserItem'
-import WatchMore from '../components/Public/WatchMore'
 import Header from '../components/Public/Header'
+import Play from '../components/Public/IconFont/Play'
+import LiveInfo from '../components/Live/LiveInfo'
+import LiveChat from '../components/Live/LiveChat'
+import SwiperNav from '../components/Public/SwiperNav'
+import LiveRecommendSwiper from '../components/Live/LiveRecommendSwiper'
 export default {
   name: 'Live',
   components: {
-    UserItem,
-    WatchMore,
-    Header
-  },
-  methods: {
-    toindex () {
-      this.$router.go(-1)
-    },
-    changechannel (index) {
-      this.now = index
-    }
+    Play,
+    Header,
+    LiveInfo,
+    LiveChat,
+    SwiperNav,
+    LiveRecommendSwiper
   },
   data () {
     return {
-      channels: this.$route.params.channels,
-      now: this.$route.params.index,
-      name: this.$route.params.name
+      userInfo: this.$route.params.userInfo,
+      navlist: ['热门直播', '才艺直播'],
+      activeClass: 0,
+      show: false
     }
   },
-  watch: {
-    now (n, o) {
+  methods: {
+    slider (active) {
+      this.activeClass = active
+    },
+    change (index) {
+      this.activeClass = index
+    },
+    play () {
+      console.log(233)
+      this.show = true
       setTimeout(() => {
-        this.$refs.video.play()
-      }, 233)
+        this.$refs.player.play()
+      }, 234)
     }
   },
-  metaInfo: {
-    title: '电视直播-UU-Watch-看-我喜欢！'
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      setTimeout(() => {
-        vm.$refs.video.play()
-      }, 233)
-    })
+  meta () {
+    return {
+      title: `${this.userInfo.name}正在富聊直播`
+    }
   }
 }
 </script>
 
 <style lang="less" scroped>
 .live {
-  .wrapper;
-  .live-video {
-    .wrapper(@height: @video-height; @top: @header-height;);
+  .video-player {
+    .wrapper;
   }
-  .live-origin {
-    .wrapper(@height: 8vw; @top: calc(@video-height + @header-height); @overflow: auto;);
-    color: #f40;
-    box-sizing: border-box;
-    border: 1px solid #aaa;
-    border-radius: 8px;
-
+  .wrapper(@overflow: auto;);
+  .userpic {
+    .wrapper(@height: 100vw;);
+    .play {
+      .iconfont-play;
+    }
   }
-  .channellist {
-    .wrapper(@height: calc(100% - @video-height - @header-height - 8vw); @top: calc(@video-height + @header-height + 8vw); @overflow: auto;);
+  .swiper-nav {
+    top: 100vw;
+    padding-left: 2vw;
   }
-  .back {
-    .wrapper(@position: fixed; @width: 10vw; @height: 10vw; @left: auto; @top: auto; @right: 0; @bottom: 0;);
-    border: 2px solid black;
-    text-align: center;
-    line-height: 10vw;
-    border-radius: 50%;
-    font-size: 8vw;
+  .header {
+    top: calc(100vw + @header-height + 49vw * 4 + 2vw + @header-height);
   }
 }
 </style>

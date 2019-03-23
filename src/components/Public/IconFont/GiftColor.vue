@@ -1,10 +1,10 @@
 <template>
-    <span class="iconfont">&#xe60e;</span>
+    <span class="iconfont">&#xe605;</span>
 </template>
 
 <script>
 export default {
-  name: 'Comments'
+  name: 'GiftColor'
 }
 </script>
 

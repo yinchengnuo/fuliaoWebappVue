@@ -1,8 +1,8 @@
 <template>
   <swiper class="live-swiper" :options="swiperOption" ref="mySwiper" @slideChange="callback">
     <div class="swiper-scrollbar" slot="scrollbar"></div>
-    <swiper-slide v-for="(item, key, index) of liveListInfo" :key="index">
-      <LiveSwiperContent :liveListInfo="item" :name="key" @get="get"></LiveSwiperContent>
+    <swiper-slide v-for="(item, index) of name" :key="index">
+      <LiveSwiperContent :name="item"></LiveSwiperContent>
     </swiper-slide>
   </swiper>
 </template>
@@ -14,7 +14,7 @@ export default {
   components: {
     LiveSwiperContent
   },
-  props: ['liveListInfo', 'activeClass'],
+  props: ['activeClass', 'name'],
   data () {
     return {
       swiperOption: {
@@ -32,18 +32,12 @@ export default {
   methods: {
     callback () {
       this.$emit('slide', this.swiper.activeIndex)
-    },
-    get (name) {
-      this.$emit('get', name)
     }
   },
   watch: {
     activeClass (n, o) {
       this.swiper.slideTo(n)
     }
-  },
-  mounted () {
-    console.log(this.liveListInfo)
   }
 }
 </script>

@@ -1,0 +1,50 @@
+<template>
+  <div class="live-chat">
+      <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">
+        <Comments class="item white"></Comments>
+        <Leter class="item white"></Leter>
+        <GiftColor class="item"></GiftColor>
+      </a>
+      <a class="chat-with" href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">主播邀你来聊天> </a>
+  </div>
+</template>
+
+<script>
+import Comments from '../Public/IconFont/Comments'
+import Leter from '../Public/IconFont/Leter'
+import GiftColor from '../Public/IconFont/GiftColor'
+export default {
+  name: 'LiveChat',
+  components: {
+    Comments,
+    Leter,
+    GiftColor
+  }
+}
+</script>
+
+<style lang="less" scroped>
+.live-chat {
+    .wrapper(@height: 10vw; @left: 2vw; @width: 96vw; @top: auto; @bottom: 2vw;);
+    .item {
+        .iconfont;
+        display: inline-block;
+        font-size: 5vw;
+        border-radius: 50%;
+        margin-right: 2vw;
+        background-color: rgba(0, 0, 0, .3);
+        color: #f40;
+    }
+    .white {
+        color: #fff;
+    }
+    .chat-with {
+        float: right;
+        border-radius: 10vw;
+        line-height: 10vw;
+        color: #fff;
+        padding: 0 2vw;
+        background: rgb(0, 195, 255);
+    }
+}
+</style>

@@ -9,7 +9,6 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 import 'swiper/dist/css/swiper.css'
 import './assets/styles/reset.css'
-import './assets/styles/animate.css'
 import './assets/styles/iconfont.css'
 
 import App from './App.vue'

@@ -1,9 +1,5 @@
 <template>
-  <div
-    @click="toTVLive"
-    class="user-item"
-    :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '47vw'}"
-  >
+  <div @click="toTVLive" class="user-item" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '47vw'}" >
     <span class="info">
       <span class="name">{{ userInfo.name }}</span>
       <span class="level">{{ userInfo.vlevel > userInfo.mlevel ? 'v' + userInfo.vlevel : 'm' + userInfo.mlevel }}</span>
@@ -48,6 +44,7 @@ export default {
     .city {
       float: right;
       font-size: 1vw;
+      margin-right: 2vw;
     }
   }
 }

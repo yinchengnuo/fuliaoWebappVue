@@ -1,10 +1,10 @@
 <template>
-    <span class="iconfont">&#xe68f;</span>
+    <span class="iconfont">&#xe621;</span>
 </template>
 
 <script>
 export default {
-  name: 'Loading'
+  name: 'Leter'
 }
 </script>
 

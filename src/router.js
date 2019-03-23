@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AppIndex from './views/AppIndex.vue'
-import LiveList from './components/LiveList/LiveList.vue'
+import LiveList from './components/Live/LiveList.vue'
 
 Vue.use(Router)
 

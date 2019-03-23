@@ -6,7 +6,7 @@
 @header-height: .6rem;
 @video-height: 56vw;
 @small-video-height: calc(100% - @header-height);
-@channels-nav-list-width: 15vw;
+@channels-nav-list-width: 18vw;
 @imgages: '~@/assets/images';
 .wrapper(@position: absolute;
 @width: 100%;
@@ -63,13 +63,32 @@
     vertical-align: text-top;
     font-family: "微软雅黑";
     vertical-align: top;
-
+    line-height: @header-height;
     &.act {
         font-size: .3rem;
         font-weight: bold;
     }
 }
+.iconfont-to-top(@size: 10vw) {
+    .wrapper(@position: fixed; @width: @size; @height: @size; @left: 80vw; @top:auto; @bottom: @size;);
+    z-index: 2;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .8);
+    border-radius: 8px;
+    font-size: @size;
+}
+.iconfont-play(@size: 20vw) {
+    .wrapper(@left: 50%; @top: 50%; @height: @size; @width: @size;);
+    margin-left: calc(-@size / 2);
+    margin-top: calc(-@size / 2);
+    line-height: @size;
+    font-size: @size;
+    color: #fff;
+    text-align: center;
+}
 .iconfont(@size: 10vw) {
+    width: @size;
+    height: @size;
     line-height: @size;
     font-size: @size;
     text-align: center;
