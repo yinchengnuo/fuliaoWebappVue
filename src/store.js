@@ -17,7 +17,31 @@ export default new Vuex.Store({
     meiliPage: 1,
     hangzhouPage: 1,
     UserIndexScrollTop: 0,
-    UserIndexUserinfo: null
+    UserIndexUserinfo: null,
+    yinchengnuo: {
+      sex: 1,
+      status: 0,
+      mlevel: 0,
+      userid: 26307780,
+      totalWealthLevel: 4,
+      userpic: 'http://img2.ipaychat.com/d3/photos/0/026/307/780.jpg?1553396270712',
+      vlevel: 0,
+      city: '杭州市',
+      isCustom: 0,
+      leveltype: 1,
+      rank: 0,
+      level: 0,
+      name: '尹成诺',
+      privilegeLevel: 0,
+      guardFlag: false,
+      age: 23,
+      focus: 33,
+      fans: 12,
+      send: 123,
+      featurn: 521,
+      lable: ['吃饭', '睡觉', '打豆豆'],
+      sign: '人生， 无非就是拉拉扯扯。'
+    }
   },
   mutations: {
     get (state, channel) {

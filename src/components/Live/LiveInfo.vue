@@ -7,7 +7,7 @@
               <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="focus" >关注</a>
           </div>
           <div class="people" :style="{ width: width + 'px' }">
-            <div class="people-pic" v-for="(item, index) in poepleNum" :key="index" @click="showPeople(index)">
+            <div class="people-pic" v-for="(item, index) in poepleNum" :style="{ background: 'url(' + watcherInfo.userpic + ') no-repeat center', backgroundSize: '100%'}" :key="index" @click="showPeople(watcherInfo, index)">
               <div class="vlevel">V4</div>
             </div>
           </div>
@@ -21,7 +21,7 @@
 <script>
 export default {
   name: 'LiveInfo',
-  props: ['userInfo'],
+  props: ['userInfo', 'watcherInfo'],
   data () {
     return {
       poepleNum: Array.from({ length: Math.ceil(Math.random() * 10) }),
@@ -32,8 +32,8 @@ export default {
     toUserIndex () {
       console.log(231321)
     },
-    showPeople (index) {
-      console.log(index + 1)
+    showPeople (watcherInfo, index) {
+      this.$emit('showPeople', watcherInfo, index + 1)
     }
   },
   mounted () {
@@ -93,8 +93,6 @@ export default {
           width: 8vw;
           height: 8vw;
           margin-right: 1vw;
-          background: url('~@/assets/images/ycn.jpg') no-repeat center;
-          background-size: 100%;
           border-radius: 50%;
           .vlevel {
             .wrapper(@height: 2vw; @width: 4vw; @top: auto; @bottom: 0; @left: 50%;);

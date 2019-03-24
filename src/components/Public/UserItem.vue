@@ -1,5 +1,5 @@
 <template>
-  <div @click="toTVLive" class="user-item" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '47vw'}" >
+  <div @click="toTVLive" class="user-item" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '47vw'}">
     <span class="info">
       <span class="name">{{ userInfo.name }}</span>
       <span class="level">{{ userInfo.vlevel > userInfo.mlevel ? 'v' + userInfo.vlevel : 'm' + userInfo.mlevel }}</span>
@@ -36,6 +36,7 @@ export default {
     box-sizing: border-box;
     padding-left: 2vw;
     color: #fff;
+    border-radius: 8px;
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, .7));
     .level {
       background: #f40;

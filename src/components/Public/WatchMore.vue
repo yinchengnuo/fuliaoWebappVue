@@ -1,8 +1,5 @@
 <template>
-  <a
-    href="http://down.ipaychat.com/echat.apk"
-    download="http://down.ipaychat.com/echat.apk"
-    class="watch-more">
+  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="watch-more">
     下载富聊APP, 看更多{{name === '杭州' ? '' : name}}直播>>>
   </a>
 </template>
