@@ -18,7 +18,15 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
+      if ((to.name === 'LiveOne' || to.name === 'LiveTwo') && (from.name === 'LiveOne' || from.name === 'LiveTwo')) {
+        if (to.params.userInfo) {
+          this.transitionName = 'slide-left'
+        } else {
+          this.transitionName = 'slide-right'
+        }
+      } else {
+        this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
+      }
     }
   }
 }

@@ -49,7 +49,7 @@ export default {
   props: ['watcherInfo', 'watcherInfoIndex'],
   methods: {
     toIndex () {
-      this.$emit('toUserIndex', this.watcherInfo)
+      this.$emit('toUserIndex', this.watcherInfo.userid)
     },
     close () {
       this.$emit('close')

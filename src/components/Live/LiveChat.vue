@@ -42,9 +42,10 @@ export default {
         float: right;
         border-radius: 10vw;
         line-height: 10vw;
+        width: 38vw;
+        text-align: center;
         color: #fff;
-        padding: 0 2vw;
-        background: rgb(0, 195, 255);
+        background: linear-gradient(to right, rgba(255, 0, 0, .9) , rgba(0, 0, 255, .7));
     }
 }
 </style>

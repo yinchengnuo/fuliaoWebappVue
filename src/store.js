@@ -18,6 +18,8 @@ export default new Vuex.Store({
     hangzhouPage: 1,
     UserIndexScrollTop: 0,
     UserIndexUserinfo: null,
+    liveHistory: [],
+    liveHistoryNum: 0,
     yinchengnuo: {
       sex: 1,
       status: 0,

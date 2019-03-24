@@ -52,9 +52,17 @@ export default new Router({
       redirect: 'LiveList'
     },
     {
-      path: '/live',
-      name: 'Live',
-      component: () => import('./views/Live.vue'),
+      path: '/liveone',
+      name: 'LiveOne',
+      component: () => import('./views/LiveOne.vue'),
+      meta: {
+        index: 1
+      }
+    },
+    {
+      path: '/livetwo',
+      name: 'LiveTwo',
+      component: () => import('./views/LiveTwo.vue'),
       meta: {
         index: 1
       }

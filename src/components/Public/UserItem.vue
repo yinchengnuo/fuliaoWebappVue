@@ -15,7 +15,7 @@ export default {
   methods: {
     toTVLive () {
       this.$router.push({
-        name: 'Live',
+        name: this.$route.name === 'LiveOne' ? 'LiveTwo' : 'LiveOne',
         params: { userInfo: this.userInfo }
       })
     }

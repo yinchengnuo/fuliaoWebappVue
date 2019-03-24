@@ -2,8 +2,8 @@
   <div class="live-info">
       <div class="top" ref="top">
           <div class="user-info" ref="userInfo">
-              <div class="user-pic" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '100%'}" @click="toUserIndex"></div>
-              <div class="user-name">{{userInfo.name}}</div>
+              <div class="user-pic" @click="toUserIndex" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '100%'}"></div>
+              <div class="user-name" @click="toUserIndex">{{userInfo.name}}</div>
               <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="focus" >关注</a>
           </div>
           <div class="people" :style="{ width: width + 'px' }">
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     toUserIndex () {
-      console.log(231321)
+      this.$emit('toUserIndex', this.userInfo.userid)
     },
     showPeople (watcherInfo, index) {
       this.$emit('showPeople', watcherInfo, index + 1)
