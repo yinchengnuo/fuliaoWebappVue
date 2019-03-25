@@ -23,7 +23,7 @@ export default {
     UserItem,
     WatchMore
   },
-  props: ['activeClass', 'name'],
+  props: ['activeClass', 'name', 'recommendUserInfo'],
   data () {
     return {
       swiperOption: {
@@ -36,18 +36,6 @@ export default {
   computed: {
     swiper () {
       return this.$refs.mySwiper.swiper
-    },
-    recommendUserInfo () {
-      let a = this.$store.state.liveListInfo['推荐'].slice(0, 9999)
-      let b = this.$store.state.liveListInfo['才艺'].slice(0, 9999)
-      return {
-        '热门直播': a.sort(() => {
-          return Math.random() - 0.5
-        }).slice(0, 8),
-        '才艺直播': b.sort(() => {
-          return Math.random() - 0.5
-        }).slice(0, 8)
-      }
     }
   },
   methods: {
@@ -55,7 +43,9 @@ export default {
       this.$emit('slide', this.swiper.activeIndex)
     }
   },
-
+  mounted () {
+    this.swiper.slideTo(this.activeClass)
+  },
   watch: {
     activeClass (n, o) {
       this.swiper.slideTo(n)
@@ -76,7 +66,7 @@ export default {
       }
       /deep/ .swiper-scrollbar-drag::after {
         content: '';
-        .wrapper(@width: 80%; @left: 5%;);
+        .wrapper(@width: 80%; @left: 10%;);
         background-color: orange;
       }
     }
