@@ -1,40 +1,50 @@
 <template>
   <div class="live-two" @scroll="scroll" ref="scroller">
-    <video v-if="show" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: videoHeight}" class="video-player"></video>
+    <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
     <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
-      <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
+      <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
       <Play class="play" @clicked="play"></Play>
       <LiveChat></LiveChat>
-      <LiveBurrage></LiveBurrage>
-      <LiveUserInfo v-show="videoHeight == '62vw' && show" @toUserIndex="toUserIndex" :userInfo="userInfo"></LiveUserInfo>
+      <transition name="live-ended">
+        <LiveEnded @clicked="clickEnded" v-show="liveEnded" info="直播刚刚结束了哦，去其他直播间看看吧"></LiveEnded>
+      </transition>
+      <LiveBurrage v-show="!liveEnded"></LiveBurrage>
+      <LiveUserInfo v-show="scrollTop > 20 && show" @toUserIndex="toUserIndex" :userInfo="userInfo"></LiveUserInfo>
     </div>
-    <transition name="alert">
+    <transition name="alert-info">
       <LiveWatcherInfoAlert v-show="userInfoAlert" @close="closeAlert" @toUserIndex="toUserIndex" :watcherInfo="watcherInfo" :watcherInfoIndex="watcherInfoIndex"></LiveWatcherInfoAlert>
     </transition>
     <SwiperNav class="swiper-nav" :navlist="navlist" :activeClass="activeClass" @change="change"></SwiperNav>
     <LiveRecommendSwiper :activeClass="activeClass" :recommendUserInfo="recommendUserInfo" @slide="slider"></LiveRecommendSwiper>
     <Header class="header"></Header>
+    <transition name="alert-app">
+      <OpenInApp v-show="scrollTop > width * 0.4 && scrollTop < app"></OpenInApp>
+    </transition>
   </div>
 </template>
 
 <script>
 import Header from '../components/Public/Header'
-import Play from '../components/Public/IconFont/Play'
 import LiveInfo from '../components/Live/LiveInfo'
 import LiveChat from '../components/Live/LiveChat'
+import Play from '../components/Public/IconFont/Play'
 import SwiperNav from '../components/Public/SwiperNav'
+import OpenInApp from '../components/Public/OpenInApp'
+import LiveEnded from '../components/Public/LiveEnded'
 import LiveBurrage from '../components/Live/LiveBurrage'
 import LiveUserInfo from '../components/Live/LiveUserInfo'
 import LiveRecommendSwiper from '../components/Live/LiveRecommendSwiper'
 import LiveWatcherInfoAlert from '../components/Live/LiveWatcherInfoAlert'
 export default {
-  name: 'LiveOne',
+  name: 'LiveTwo',
   components: {
     Play,
     Header,
     LiveInfo,
     LiveChat,
+    OpenInApp,
     SwiperNav,
+    LiveEnded,
     LiveBurrage,
     LiveUserInfo,
     LiveRecommendSwiper,
@@ -46,11 +56,14 @@ export default {
       activeClass: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].activeClass,
       navlist: ['热门直播', '才艺直播'],
       show: false,
-      videoHeight: '100vh',
+      app: 0,
+      width: 0,
+      scrollTop: 0,
       yinchengnuo: this.$store.state.yinchengnuo,
       watcherInfo: {},
       watcherInfoIndex: 0,
-      userInfoAlert: false
+      userInfoAlert: false,
+      liveEnded: false
     }
   },
   computed: {
@@ -85,11 +98,7 @@ export default {
       }, 123)
     },
     scroll () {
-      if (this.$refs.scroller.scrollTop > 20) {
-        this.videoHeight = '62vw'
-      } else {
-        this.videoHeight = '100vh'
-      }
+      this.scrollTop = this.$refs.scroller.scrollTop
     },
     alert (watcherInfo, index) {
       this.watcherInfo = watcherInfo
@@ -99,14 +108,27 @@ export default {
     closeAlert () {
       this.userInfoAlert = false
     },
+    clickEnded () {
+      this.$refs.scroller.scrollTop = this.width
+    },
     toUserIndex (userid) {
-      console.log('toUserIndex', userid)
+      alert('toUserIndex ' + userid)
     }
   },
   mounted () {
     if (!this.$route.params.userInfo) {
       this.$refs.scroller.scrollTop = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].scrollTop
     }
+    this.width = document.body.offsetWidth
+    this.app = document.body.offsetWidth * 3 - this.$refs.scroller.offsetHeight + 30
+    this.$refs.player.addEventListener('ended', () => {
+      this.liveEnded = true
+      this.show = false
+    })
+    this.$refs.player.addEventListener('error', () => {
+      this.liveEnded = true
+      this.show = false
+    })
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
@@ -168,14 +190,32 @@ export default {
   .header {
     top: calc(100vw + @header-height + 49vw * 4 + 2vw + @header-height);
   }
-  .alert-enter-active, .alert-leave-active {
-    transition: all .3s;
-  }
-  .alert-enter{
-    transform: translateY(20vh);
-  }
-  .alert-leave-to {
-    transform: translateY(100vh);
-  }
+}
+.alert-info-enter-active, .alert-info-leave-active {
+  transition: all .3s;
+}
+.alert-info-enter{
+  transform: translateY(20vh);
+}
+.alert-info-leave-to {
+  transform: translateY(100vh);
+}
+.alert-app-enter-active, .alert-app-leave-active {
+  transition: all 1s;
+}
+.alert-app-enter{
+  transform: translateY(70vh);
+}
+.alert-app-leave-to {
+  transform: translateY(100vh);
+}
+.live-ended-enter-active, .live-ended-leave-active {
+  transition: all 1s;
+}
+.live-ended-enter{
+  transform: translateY(76vw);
+}
+.live-ended-leave-to {
+  transform: translateY(100vh);
 }
 </style>

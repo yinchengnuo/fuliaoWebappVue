@@ -34,6 +34,7 @@ export default {
   .wrapper(@height: @header-height);
   background-color: #f2f2f2;
   text-align: center;
+  z-index: 2;
   .left {
     float: left;
     img {

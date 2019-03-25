@@ -56,7 +56,7 @@ export default {
 
 <style lang="less" scoped>
 .live-recommend-swiper {
-    .wrapper(@height: calc(49vw * 4 + 2vw + @header-height); @top: calc(100vw + @header-height););
+    .wrapper(@height: auto; @top: calc(100vw + @header-height););
     box-sizing: border-box;
     .swiper-scrollbar {
       .wrapper(@height: 2px; @width: calc(@channels-nav-list-width * 2); @left: 2vw;);

@@ -13,7 +13,7 @@ export default {
   name: 'App',
   data () {
     return {
-      transitionName: 'slide-left'
+      transitionName: ''
     }
   },
   watch: {
@@ -25,7 +25,11 @@ export default {
           this.transitionName = 'slide-right'
         }
       } else {
-        this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
+        if (from.meta.index) {
+          this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
+        } else {
+          this.transitionName = ''
+        }
       }
     }
   }

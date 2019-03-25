@@ -6,7 +6,7 @@
               <div class="user-name" @click="toUserIndex">{{userInfo.name}}</div>
               <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="focus" >关注</a>
           </div>
-          <div class="people" :style="{ width: width + 'px' }">
+          <div class="people" v-show="!liveEnded" :style="{ width: width + 'px' }">
             <div class="people-pic" v-for="(item, index) in poepleNum" :style="{ background: 'url(' + watcherInfo.userpic + ') no-repeat center', backgroundSize: '100%'}" :key="index" @click="showPeople(watcherInfo, index)">
               <div class="vlevel">V4</div>
             </div>
@@ -21,7 +21,7 @@
 <script>
 export default {
   name: 'LiveInfo',
-  props: ['userInfo', 'watcherInfo'],
+  props: ['userInfo', 'watcherInfo', 'liveEnded'],
   data () {
     return {
       poepleNum: Array.from({ length: Math.ceil(Math.random() * 10) }),
