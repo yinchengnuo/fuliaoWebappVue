@@ -4,7 +4,7 @@
       <img src="@/assets/images/logo.png">
       <img src="@/assets/images/logotext.png">
     </div>
-    <div class="center">{{name}}</div>
+    <div class="center" @click="toIndex">{{name}}</div>
     <a
       href="http://down.ipaychat.com/echat.apk"
       download="http://down.ipaychat.com/echat.apk"
@@ -17,7 +17,12 @@
 <script>
 export default {
   name: 'Header',
-  props: ['name']
+  props: ['name'],
+  methods: {
+    toIndex () {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

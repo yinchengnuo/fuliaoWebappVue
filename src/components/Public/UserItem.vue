@@ -24,7 +24,7 @@ export default {
         name = 'LiveOne'
       }
       this.$router.push({
-        name,
+        name: name,
         params: { userInfo: this.userInfo }
       })
     }
@@ -53,7 +53,7 @@ export default {
     }
     .city {
       float: right;
-      font-size: 1vw;
+      font-size: 3vw;
       margin-right: 2vw;
     }
   }

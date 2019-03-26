@@ -6,7 +6,6 @@ import LiveList from './components/Live/LiveList.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',
@@ -26,9 +25,9 @@ export default new Router({
           }
         },
         {
-          path: 'smallvideo',
-          name: 'smallvideo',
-          component: () => import('./components/SmallVideo/SmallVideos.vue'),
+          path: 'smallvideolist',
+          name: 'SmallVideoList',
+          component: () => import('./components/SmallVideo/SmallVideoList.vue'),
           meta: {
             index: 0.2
           }

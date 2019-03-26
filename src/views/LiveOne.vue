@@ -1,6 +1,6 @@
 <template>
   <div class="live-one" @scroll="scroll" ref="scroller">
-    <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: (window.navigator.userAgent.match(/Baidu/) || window.navigator.userAgent.match(/Quark/)) ? '62vw': scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
+    <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: (Quark || Baidu) ? '62vw': scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
     <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
       <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
       <Play class="play" @clicked="play"></Play>
@@ -9,16 +9,16 @@
         <LiveEnded @clicked="clickEnded" v-show="liveEnded" info="直播刚刚结束了哦，去其他直播间看看吧"></LiveEnded>
       </transition>
       <LiveBurrage v-show="!liveEnded"></LiveBurrage>
-      <LiveUserInfo v-show="scrollTop > 20 && show" @toUserIndex="toUserIndex" :userInfo="userInfo"></LiveUserInfo>
+      <LiveUserInfo v-show="(Quark || Baidu) ? 1 : scrollTop > 20 && show" @toUserIndex="toUserIndex" :userInfo="userInfo"></LiveUserInfo>
     </div>
     <transition name="alert-info">
       <LiveWatcherInfoAlert v-show="userInfoAlert" @close="closeAlert" @toUserIndex="toUserIndex" :watcherInfo="watcherInfo" :watcherInfoIndex="watcherInfoIndex"></LiveWatcherInfoAlert>
     </transition>
     <SwiperNav class="swiper-nav" :navlist="navlist" :activeClass="activeClass" @change="change"></SwiperNav>
     <LiveRecommendSwiper :activeClass="activeClass" :recommendUserInfo="recommendUserInfo" @slide="slider"></LiveRecommendSwiper>
-    <Header class="header"></Header>
+    <Header class="header" name="返回首页"></Header>
     <transition name="alert-app">
-      <OpenInApp v-show="scrollTop > width * 0.4 && scrollTop < app"></OpenInApp>
+      <OpenInApp v-show="scrollTop > width * 0.3 && scrollTop < app"></OpenInApp>
     </transition>
   </div>
 </template>
@@ -62,6 +62,8 @@ export default {
       show: false,
       app: 0,
       width: 0,
+      Quark: window.navigator.userAgent.match(/Quark/),
+      Baidu: window.navigator.userAgent.match(/Baidu/),
       yinchengnuo: this.$store.state.yinchengnuo,
       watcherInfo: {},
       watcherInfoIndex: 0,
@@ -122,7 +124,7 @@ export default {
     })
   },
   created () {
-    if (this.$route.params.userInfo) {
+    const getRecommendUserInfo = () => {
       this.$http.get(`http://39.96.73.206:8888/moretuijian`).then((response) => {
         this.recommendUserInfo['热门直播'] = response.data.info.sort(() => {
           return Math.random() - 0.5
@@ -133,38 +135,47 @@ export default {
           return Math.random() - 0.5
         }).slice(0, 8)
       })
+    }
+    if (this.$route.params.userInfo) {
+      getRecommendUserInfo()
     } else {
       const s = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].recommendUserInfo
-      this.recommendUserInfo['热门直播'] = s['热门直播']
-      this.recommendUserInfo['才艺直播'] = s['才艺直播']
+      if (s) {
+        this.recommendUserInfo['热门直播'] = s['热门直播']
+        this.recommendUserInfo['才艺直播'] = s['才艺直播']
+      } else {
+        getRecommendUserInfo()
+      }
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
+      const enterSession = window.sessionStorage.getItem('fuliaoLiveSession')
       const time = +new Date()
       vm.time = time
       history.replaceState({ time }, null)
+      const enterData = {
+        userInfo: vm.userInfo
+      }
+      if (enterSession) {
+        const oldEnterSession = JSON.parse(enterSession)
+        oldEnterSession[`${time}`] = enterData
+        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
+      } else {
+        const initSession = {}
+        initSession[`${time}`] = enterData
+        console.log(initSession)
+        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
+      }
     })
   },
   beforeRouteLeave (to, from, next) {
-    console.log(history.state.time)
-    const session = window.sessionStorage.getItem('fuliaoLiveSession')
-    const data = {
-      userInfo: this.userInfo,
-      recommendUserInfo: this.recommendUserInfo,
-      activeClass: this.activeClass,
-      scrollTop: this.$refs.scroller.scrollTop
-    }
-    if (session) {
-      const oldSession = JSON.parse(session)
-      oldSession.liveOneTimes.push(this.time)
-      oldSession[`${this.time}`] = data
-      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldSession))
-    } else {
-      const initSession = {}
-      initSession[`${this.time}`] = data
-      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
-    }
+    const leaveSession = window.sessionStorage.getItem('fuliaoLiveSession')
+    const oldLeaveSession = JSON.parse(leaveSession)
+    oldLeaveSession[`${this.time}`].recommendUserInfo = this.recommendUserInfo
+    oldLeaveSession[`${this.time}`].activeClass = this.activeClass
+    oldLeaveSession[`${this.time}`].scrollTop = this.$refs.scroller.scrollTop
+    window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
     next()
   },
   meta () {
@@ -206,7 +217,7 @@ export default {
   transform: translateY(100vh);
 }
 .alert-app-enter-active, .alert-app-leave-active {
-  transition: all 1s;
+  transition: all .5s;
 }
 .alert-app-enter{
   transform: translateY(70vh);

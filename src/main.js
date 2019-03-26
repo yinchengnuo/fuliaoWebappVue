@@ -5,6 +5,7 @@ import Meta from 'vue-meta'
 import router from './router'
 import VueAxios from 'vue-axios'
 import VueTouch from 'vue-touch'
+import FastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 import 'swiper/dist/css/swiper.css'
@@ -20,6 +21,8 @@ Vue.use(Meta, {
 Vue.use(VueTouch)
 Vue.use(VueAxios, axios)
 Vue.use(VueAwesomeSwiper)
+FastClick.attach(document.body)
+
 Vue.config.productionTip = false
 if (document.body.offsetWidth > 768) {
   new Vue({

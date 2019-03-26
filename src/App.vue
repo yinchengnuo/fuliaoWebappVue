@@ -22,13 +22,12 @@ export default {
         this.transitionName = 'slide-left'
       } else if (to.name === 'LiveThr' && from.name === 'LiveOne') {
         this.transitionName = 'slide-right'
+      } else if (from.name === null) {
+        this.transitionName = ''
       } else {
         this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
       }
     }
-  },
-  mounted () {
-    // alert(navigator.userAgent)
   }
 }
 </script>
