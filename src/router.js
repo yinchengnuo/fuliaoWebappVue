@@ -6,6 +6,7 @@ import LiveList from './components/Live/LiveList.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -56,7 +57,7 @@ export default new Router({
       name: 'LiveOne',
       component: () => import('./views/LiveOne.vue'),
       meta: {
-        index: 1
+        index: 1.1
       }
     },
     {
@@ -64,7 +65,15 @@ export default new Router({
       name: 'LiveTwo',
       component: () => import('./views/LiveTwo.vue'),
       meta: {
-        index: 1
+        index: 1.2
+      }
+    },
+    {
+      path: '/livethr',
+      name: 'LiveThr',
+      component: () => import('./views/LiveThr.vue'),
+      meta: {
+        index: 1.3
       }
     },
     {

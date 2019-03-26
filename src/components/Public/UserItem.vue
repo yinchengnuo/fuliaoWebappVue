@@ -4,6 +4,7 @@
       <span class="name">{{ userInfo.name }}</span>
       <span class="level">{{ userInfo.vlevel > userInfo.mlevel ? 'v' + userInfo.vlevel : 'm' + userInfo.mlevel }}</span>
       <span class="city">{{ name == '杭州' ? userInfo.city : '' }}</span>
+      <span class="city">{{ name == '才艺' ? userInfo.labelName : '' }}</span>
     </span>
   </div>
 </template>
@@ -14,8 +15,16 @@ export default {
   props: ['userInfo', 'name'],
   methods: {
     toTVLive () {
+      let name = ''
+      if (this.$route.name === 'LiveOne') {
+        name = 'LiveTwo'
+      } else if (this.$route.name === 'LiveTwo') {
+        name = 'LiveThr'
+      } else {
+        name = 'LiveOne'
+      }
       this.$router.push({
-        name: this.$route.name === 'LiveOne' ? 'LiveTwo' : 'LiveOne',
+        name,
         params: { userInfo: this.userInfo }
       })
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="live-one" @scroll="scroll" ref="scroller">
-    <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
+    <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: (window.navigator.userAgent.match(/Baidu/) || window.navigator.userAgent.match(/Quark/)) ? '62vw': scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
     <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
       <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
       <Play class="play" @clicked="play"></Play>
@@ -53,12 +53,15 @@ export default {
   data () {
     return {
       userInfo: this.$route.params.userInfo ? this.$route.params.userInfo : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].userInfo,
+      scrollTop: 0,
       activeClass: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].activeClass,
-      navlist: ['热门直播', '才艺直播'],
+      recommendUserInfo: {
+        '热门直播': [],
+        '才艺直播': []
+      },
       show: false,
       app: 0,
       width: 0,
-      scrollTop: 0,
       yinchengnuo: this.$store.state.yinchengnuo,
       watcherInfo: {},
       watcherInfoIndex: 0,
@@ -68,21 +71,8 @@ export default {
     }
   },
   computed: {
-    recommendUserInfo () {
-      if (this.$route.params.userInfo) {
-        let a = this.$store.state.liveListInfo['推荐'].slice(0, 9999)
-        let b = this.$store.state.liveListInfo['才艺'].slice(0, 9999)
-        return {
-          '热门直播': a.sort(() => {
-            return Math.random() - 0.5
-          }).slice(0, 8),
-          '才艺直播': b.sort(() => {
-            return Math.random() - 0.5
-          }).slice(0, 8)
-        }
-      } else {
-        return JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].recommendUserInfo
-      }
+    navlist () {
+      return Object.keys(this.recommendUserInfo)
     }
   },
   methods: {
@@ -131,33 +121,50 @@ export default {
       this.show = false
     })
   },
+  created () {
+    if (this.$route.params.userInfo) {
+      this.$http.get(`http://39.96.73.206:8888/moretuijian`).then((response) => {
+        this.recommendUserInfo['热门直播'] = response.data.info.sort(() => {
+          return Math.random() - 0.5
+        }).slice(0, 8)
+      })
+      this.$http.get(`http://39.96.73.206:8888/morecaiyi`).then((response) => {
+        this.recommendUserInfo['才艺直播'] = response.data.info.channelList.sort(() => {
+          return Math.random() - 0.5
+        }).slice(0, 8)
+      })
+    } else {
+      const s = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].recommendUserInfo
+      this.recommendUserInfo['热门直播'] = s['热门直播']
+      this.recommendUserInfo['才艺直播'] = s['才艺直播']
+    }
+  },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      const enterSession = window.sessionStorage.getItem('fuliaoLiveSession')
-      const enterData = {
-        userInfo: vm.userInfo,
-        recommendUserInfo: vm.recommendUserInfo
-      }
       const time = +new Date()
       vm.time = time
       history.replaceState({ time }, null)
-      if (enterSession) {
-        const oldEnterSession = JSON.parse(enterSession)
-        oldEnterSession[`${time}`] = enterData
-        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
-      } else {
-        const initSession = {}
-        initSession[`${time}`] = enterData
-        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
-      }
     })
   },
   beforeRouteLeave (to, from, next) {
-    const leaveSession = window.sessionStorage.getItem('fuliaoLiveSession')
-    const oldLeaveSession = JSON.parse(leaveSession)
-    oldLeaveSession[`${this.time}`].activeClass = this.activeClass
-    oldLeaveSession[`${this.time}`].scrollTop = this.$refs.scroller.scrollTop
-    window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
+    console.log(history.state.time)
+    const session = window.sessionStorage.getItem('fuliaoLiveSession')
+    const data = {
+      userInfo: this.userInfo,
+      recommendUserInfo: this.recommendUserInfo,
+      activeClass: this.activeClass,
+      scrollTop: this.$refs.scroller.scrollTop
+    }
+    if (session) {
+      const oldSession = JSON.parse(session)
+      oldSession.liveOneTimes.push(this.time)
+      oldSession[`${this.time}`] = data
+      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldSession))
+    } else {
+      const initSession = {}
+      initSession[`${this.time}`] = data
+      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
+    }
     next()
   },
   meta () {
@@ -172,6 +179,7 @@ export default {
 .live-one {
   .video-player {
     .wrapper(@position: fixed; @height: 100vw;);
+    z-index: 3;
   }
   .wrapper(@overflow: auto;);
   .userpic {

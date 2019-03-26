@@ -1,5 +1,5 @@
 <template>
-  <div class="live-two" @scroll="scroll" ref="scroller">
+  <div class="live-thr" @scroll="scroll" ref="scroller">
     <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: (window.navigator.userAgent.match(/Baidu/) || window.navigator.userAgent.match(/Quark/)) ? '62vw': scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
     <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
       <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
@@ -36,7 +36,7 @@ import LiveUserInfo from '../components/Live/LiveUserInfo'
 import LiveRecommendSwiper from '../components/Live/LiveRecommendSwiper'
 import LiveWatcherInfoAlert from '../components/Live/LiveWatcherInfoAlert'
 export default {
-  name: 'LiveTwo',
+  name: 'LiveThr',
   components: {
     Play,
     Header,
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style lang="less" scroped>
-.live-two {
+.live-thr {
   .video-player {
     .wrapper(@position: fixed; @height: 100vw;);
     z-index: 3;

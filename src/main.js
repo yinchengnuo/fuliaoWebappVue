@@ -21,7 +21,7 @@ Vue.use(VueTouch)
 Vue.use(VueAxios, axios)
 Vue.use(VueAwesomeSwiper)
 Vue.config.productionTip = false
-if (document.body.offsetWidth > 768 || window.navigator.userAgent.match(/Baidu/) || window.navigator.userAgent.match(/Quark/)) {
+if (document.body.offsetWidth > 768) {
   new Vue({
     render: h => h(Error)
   }).$mount('#app')

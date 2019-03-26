@@ -18,25 +18,17 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if ((to.name === 'LiveOne' || to.name === 'LiveTwo') && (from.name === 'LiveOne' || from.name === 'LiveTwo')) {
-        if (to.params.userInfo) {
-          this.transitionName = 'slide-left'
-        } else {
-          this.transitionName = 'slide-right'
-        }
+      if (from.name === 'LiveThr' && to.name === 'LiveOne') {
+        this.transitionName = 'slide-left'
+      } else if (to.name === 'LiveThr' && from.name === 'LiveOne') {
+        this.transitionName = 'slide-right'
       } else {
-        if (from.meta.index) {
-          this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
-        } else {
-          this.transitionName = ''
-        }
+        this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
       }
     }
   },
   mounted () {
-    window.onpopstate = (e) => {
-      console.log(e)
-    }
+    // alert(navigator.userAgent)
   }
 }
 </script>
@@ -44,14 +36,14 @@ export default {
 <style lang="less" scroped>
 #app {
   .wrapper;
-  .slide-left-enter-active, .slide-left-leave-active, .slide-right-enter-active, .slide-right-leave-active {
-    transition: all .3s;
-  }
-  .slide-left-enter, .slide-right-leave-to {
-    transform: translateX(100vw);
-  }
-  .slide-left-leave-to, .slide-right-enter {
-    transform: translateX(-100vw);
-  }
+}
+.slide-left-enter-active, .slide-left-leave-active, .slide-right-enter-active, .slide-right-leave-active {
+  transition: all .3s;
+}
+.slide-left-enter, .slide-right-leave-to {
+  transform: translateX(100vw);
+}
+.slide-left-leave-to, .slide-right-enter {
+  transform: translateX(-100vw);
 }
 </style>

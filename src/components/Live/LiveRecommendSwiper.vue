@@ -2,12 +2,12 @@
   <swiper class="live-recommend-swiper" :options="swiperOption" ref="mySwiper" @slideChange="callback">
     <div class="swiper-scrollbar" slot="scrollbar"></div>
     <swiper-slide class="item">
-      <UserItem v-for="(item, index) in recommendUserInfo['热门直播']" :key="index" :userInfo="item"></UserItem>
+      <UserItem v-for="(item, index) in recommendUserInfo['热门直播']" :key="index" :userInfo="item" name="热门"></UserItem>
       <div class="white"></div>
       <WatchMore name="热门"></WatchMore>
     </swiper-slide>
     <swiper-slide class="item">
-      <UserItem v-for="(item, index) in recommendUserInfo['才艺直播']" :key="index" :userInfo="item"></UserItem>
+      <UserItem v-for="(item, index) in recommendUserInfo['才艺直播']" :key="index" :userInfo="item" name="才艺"></UserItem>
       <div class="white"></div>
       <WatchMore name="才艺"></WatchMore>
     </swiper-slide>
