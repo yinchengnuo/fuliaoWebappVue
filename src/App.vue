@@ -32,6 +32,11 @@ export default {
         }
       }
     }
+  },
+  mounted () {
+    window.onpopstate = (e) => {
+      console.log(e)
+    }
   }
 }
 </script>

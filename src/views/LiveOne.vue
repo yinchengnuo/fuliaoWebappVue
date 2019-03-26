@@ -52,8 +52,8 @@ export default {
   },
   data () {
     return {
-      userInfo: this.$route.params.userInfo ? this.$route.params.userInfo : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].userInfo,
-      activeClass: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].activeClass,
+      userInfo: this.$route.params.userInfo ? this.$route.params.userInfo : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].userInfo,
+      activeClass: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].activeClass,
       navlist: ['热门直播', '才艺直播'],
       show: false,
       app: 0,
@@ -63,7 +63,8 @@ export default {
       watcherInfo: {},
       watcherInfoIndex: 0,
       userInfoAlert: false,
-      liveEnded: false
+      liveEnded: false,
+      time: 0
     }
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
           }).slice(0, 8)
         }
       } else {
-        return JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].recommendUserInfo
+        return JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].recommendUserInfo
       }
     }
   },
@@ -117,7 +118,7 @@ export default {
   },
   mounted () {
     if (!this.$route.params.userInfo) {
-      this.$refs.scroller.scrollTop = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[0].scrollTop
+      this.$refs.scroller.scrollTop = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].scrollTop
     }
     this.width = document.body.offsetWidth
     this.app = document.body.offsetWidth * 3 - this.$refs.scroller.offsetHeight + 30
@@ -137,30 +138,26 @@ export default {
         userInfo: vm.userInfo,
         recommendUserInfo: vm.recommendUserInfo
       }
-      if (vm.$route.params.userInfo) {
-        if (enterSession) {
-          const oldEnterSession = JSON.parse(enterSession)
-          oldEnterSession.unshift(enterData)
-          window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
-        } else {
-          const arr = []
-          arr.unshift(enterData)
-          window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(arr))
-        }
+      const time = +new Date()
+      vm.time = time
+      history.replaceState({ time }, null)
+      if (enterSession) {
+        const oldEnterSession = JSON.parse(enterSession)
+        oldEnterSession[`${time}`] = enterData
+        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
+      } else {
+        const initSession = {}
+        initSession[`${time}`] = enterData
+        window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
       }
     })
   },
   beforeRouteLeave (to, from, next) {
     const leaveSession = window.sessionStorage.getItem('fuliaoLiveSession')
     const oldLeaveSession = JSON.parse(leaveSession)
-    if (to.params.userInfo) {
-      oldLeaveSession[0].activeClass = this.activeClass
-      oldLeaveSession[0].scrollTop = this.$refs.scroller.scrollTop
-      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
-    } else {
-      oldLeaveSession.shift()
-      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
-    }
+    oldLeaveSession[`${this.time}`].activeClass = this.activeClass
+    oldLeaveSession[`${this.time}`].scrollTop = this.$refs.scroller.scrollTop
+    window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
     next()
   },
   meta () {
