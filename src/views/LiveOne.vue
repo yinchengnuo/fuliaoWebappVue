@@ -164,7 +164,6 @@ export default {
       } else {
         const initSession = {}
         initSession[`${time}`] = enterData
-        console.log(initSession)
         window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(initSession))
       }
     })

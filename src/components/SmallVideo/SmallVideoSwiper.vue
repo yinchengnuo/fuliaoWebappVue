@@ -1,5 +1,5 @@
 <template>
-  <swiper class="small-video-swiper" :options="swiperOption" ref="mySwiper">
+  <swiper v-if="swiperShow" class="small-video-swiper" :options="swiperOption" ref="mySwiper">
     <swiper-slide v-for="(item, index) of imgs" :key="index">
         <img :src="item" class="img">
     </swiper-slide>
@@ -14,6 +14,7 @@ export default {
     return {
       swiperOption: {
         autoplay: true,
+        loop: true,
         pagination: {
           el: '.swiper-pagination',
           bulletActiveClass: 'my-bullet-active'
@@ -26,7 +27,8 @@ export default {
         require('../../assets/images/4.jpg'),
         require('../../assets/images/5.jpg'),
         require('../../assets/images/6.jpg')
-      ]
+      ],
+      swiperShow: false
     }
   },
   computed: {
@@ -35,7 +37,10 @@ export default {
     }
   },
   activated () {
-    console.log(12312)
+    this.swiperShow = true
+  },
+  deactivated () {
+    this.swiperShow = false
   }
 }
 </script>

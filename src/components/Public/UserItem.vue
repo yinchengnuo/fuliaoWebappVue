@@ -20,11 +20,13 @@ export default {
         name = 'LiveTwo'
       } else if (this.$route.name === 'LiveTwo') {
         name = 'LiveThr'
-      } else {
+      } else if (this.$route.name === 'LiveThr') {
+        name = 'LiveOne'
+      } else if (this.$route.name === 'LiveList') {
         name = 'LiveOne'
       }
       this.$router.push({
-        name: name,
+        name,
         params: { userInfo: this.userInfo }
       })
     }

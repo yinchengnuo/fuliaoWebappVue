@@ -1,5 +1,5 @@
 <template>
-  <div class="small-video-list-item" :style="{ background: 'url(' + videoInfo.cover + ') no-repeat center', backgroundSize: '32vw'}">
+  <div class="small-video-list-item" @click="toVideo" :style="{ background: 'url(' + videoInfo.cover + ') no-repeat center', backgroundSize: '32vw'}">
       <span class="hot" v-if="index === 0 || index === 1 || index === 2">热门</span>
       <Play class="play"></Play>
       <Liked class="liked"></Liked>
@@ -16,6 +16,25 @@ export default {
   components: {
     Play,
     Liked
+  },
+  methods: {
+    toVideo () {
+      let name = ''
+      if (this.$route.name === 'VideoOne') {
+        name = 'VideoTwo'
+      } else if (this.$route.name === 'VideoTwo') {
+        name = 'VideoThr'
+      } else if (this.$route.name === 'VideoThr') {
+        name = 'VideoOne'
+      } else if (this.$route.name === 'SmallVideoList') {
+        name = 'VideoOne'
+      }
+      console.log(this.$router)
+      this.$router.push({
+        name,
+        params: { videoInfo: this.videoInfo }
+      })
+    }
   }
 }
 </script>
@@ -27,6 +46,7 @@ export default {
     margin: 0 0 1vw 1vw;
     float: left;
     position: relative;
+    border-radius: 8px;
     .hot {
         .wrapper(@width: 10vw; @height: 4vw; @left: 2vw; @top: 2vw; );
         text-align: center;

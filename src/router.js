@@ -76,11 +76,35 @@ export default new Router({
       }
     },
     {
+      path: '/videoone',
+      name: 'VideoOne',
+      component: () => import('./views/VideoOne.vue'),
+      meta: {
+        index: 2.1
+      }
+    },
+    {
+      path: '/videotwo',
+      name: 'VideoTwo',
+      component: () => import('./views/VideoTwo.vue'),
+      meta: {
+        index: 2.2
+      }
+    },
+    {
+      path: '/videothr',
+      name: 'VideoThr',
+      component: () => import('./views/VideoThr.vue'),
+      meta: {
+        index: 2.3
+      }
+    },
+    {
       path: '/uesrindex',
       name: 'UserIndex',
       component: () => import('./views/UserIndex.vue'),
       meta: {
-        index: 2
+        index: 3
       }
     },
     {
@@ -88,7 +112,7 @@ export default new Router({
       name: 'VideoIntroduction',
       component: () => import('./views/VideoIntroduction.vue'),
       meta: {
-        index: 3
+        index: 4
       }
     }
   ]
