@@ -1,18 +1,18 @@
 <template>
-  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="watch-more">
-    下载富聊APP, 看更多{{name === '杭州直播' ? '直播' : name}}>>>
+  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="text-loading">
+    加载中...
   </a>
 </template>
 
 <script>
 export default {
-  name: 'WatchMore',
+  name: 'text-loading',
   props: ['name']
 }
 </script>
 
 <style lang="less" scoped>
-.watch-more {
+.text-loading {
   display: block;
   .wrapper(@position: relative; @height: @header-height; @top: auto; @bottom: 0;);
   line-height: @header-height;

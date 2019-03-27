@@ -33,13 +33,17 @@ export default {
     swiper () {
       return this.$refs.mySwiper.swiper
     }
+  },
+  activated () {
+    console.log(12312)
   }
 }
 </script>
 
 <style lang="less" scoped>
 .small-video-swiper {
-    .wrapper(@top: @header-height; @height: 25vw;);
+    .wrapper(@position: relative; @top: @header-height; @height: 25vw;);
+    margin-bottom: 1vw;
     .img {
         width: 100%;
         height: 100%;

@@ -2,7 +2,8 @@
   <div class="live-swiper-content" @scroll="scroll" ref="scroller">
     <div class="wrapper" ref="scrollerContent">
       <UserItem v-for="(item, index) in liveListInfo" :key="index" :userInfo="item" :name="name"></UserItem>
-      <WatchMore v-show="showWatchMore" :name="name"></WatchMore>
+      <TextLoading v-show="liveListInfo.length && !watchMore"></TextLoading>
+      <WatchMore v-show="watchMore" :name="name + '直播'"></WatchMore>
     </div>
     <ToTop v-show="scrollTop > 10" class="totop" @clicked="toTop"></ToTop>
   </div>
@@ -10,6 +11,7 @@
 
 <script>
 import UserItem from '../Public/UserItem'
+import TextLoading from '../Public/TextLoading'
 import WatchMore from '../Public/WatchMore'
 import ToTop from '../Public/IconFont/ToTop'
 export default {
@@ -18,7 +20,8 @@ export default {
   components: {
     UserItem,
     ToTop,
-    WatchMore
+    WatchMore,
+    TextLoading
   },
   data () {
     return {
@@ -66,6 +69,19 @@ export default {
   computed: {
     liveListInfo () {
       return this.$store.state.liveListInfo[this.name]
+    },
+    watchMore () {
+      let prop = ''
+      if (this.name === '推荐') {
+        prop = 'tuijianPage'
+      } else if (this.name === '才艺') {
+        prop = 'caiyiPage'
+      } else if (this.name === '魅力') {
+        prop = 'meiliPage'
+      } else if (this.name === '杭州') {
+        prop = 'hangzhouPage'
+      }
+      return !this.$store.state[`${prop}`]
     }
   },
   mounted () {

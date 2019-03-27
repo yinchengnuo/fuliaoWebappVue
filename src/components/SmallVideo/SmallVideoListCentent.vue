@@ -1,14 +1,17 @@
 <template>
   <div class="small-video-list-content">
       <SmallVideoListItem v-for="(item, index) in smallVideoData" :key="index" :videoInfo="item" :index="index"></SmallVideoListItem>
+      <WatchMore name="小视频"></WatchMore>
   </div>
 </template>
 
 <script>
+import WatchMore from '../Public/WatchMore'
 import SmallVideoListItem from './SmallVideoListItem'
 export default {
   name: 'SmallVideoListContent',
   components: {
+    WatchMore,
     SmallVideoListItem
   },
   data () {
@@ -36,8 +39,6 @@ export default {
 
 <style lang="less" scoped>
 .small-video-list-content {
-    .wrapper(@top: calc(@header-height + 25vw); @height: calc(100% - @header-height - 25vw); @overflow: scroll;);
-    box-sizing: border-box;
-    padding-top: 1vw;
+    .wrapper(@top: calc(@header-height + 26vw); @height: calc(100% - @header-height - 26vw); @overflow: scroll;);
 }
 </style>
