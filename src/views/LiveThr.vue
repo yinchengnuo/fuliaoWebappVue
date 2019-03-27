@@ -2,7 +2,7 @@
   <div class="live-thr" @scroll="scroll" ref="scroller">
     <video v-show="show && !liveEnded" ref="player" :src="userInfo.streamUrl.replace('rtmp', 'http') + '.m3u8'" :style="{ height: (Quark || Baidu) ? '62vw': scrollTop > 20 ? '62vw' : '100vh'}" class="video-player"></video>
     <div class="userpic" :style="{ background: 'url(' + userInfo.bgpic + ') no-repeat center', backgroundSize: '150%'}">
-      <LiveInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></LiveInfo>
+      <RoomInfo @toUserIndex="toUserIndex" :userInfo="userInfo" :liveEnded="liveEnded" :watcherInfo="yinchengnuo" @showPeople="alert"></RoomInfo>
       <Play class="play" @clicked="play"></Play>
       <LiveChat></LiveChat>
       <transition name="live-ended">
@@ -25,7 +25,7 @@
 
 <script>
 import Header from '../components/Public/Header'
-import LiveInfo from '../components/Live/LiveInfo'
+import RoomInfo from '../components/Public/RoomInfo'
 import LiveChat from '../components/Live/LiveChat'
 import Play from '../components/Public/IconFont/Play'
 import SwiperNav from '../components/Public/SwiperNav'
@@ -40,7 +40,7 @@ export default {
   components: {
     Play,
     Header,
-    LiveInfo,
+    RoomInfo,
     LiveChat,
     OpenInApp,
     SwiperNav,
@@ -147,20 +147,16 @@ export default {
         getRecommendUserInfo()
       }
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      const enterSession = window.sessionStorage.getItem('fuliaoLiveSession')
-      const time = +new Date()
-      vm.time = time
-      history.replaceState({ time }, null)
-      const enterData = {
-        userInfo: vm.userInfo
-      }
-      const oldEnterSession = JSON.parse(enterSession)
-      oldEnterSession[`${time}`] = enterData
-      window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
-    })
+    const enterSession = window.sessionStorage.getItem('fuliaoLiveSession')
+    const time = +new Date()
+    this.time = time
+    history.replaceState({ time }, null)
+    const enterData = {
+      userInfo: this.userInfo
+    }
+    const oldEnterSession = JSON.parse(enterSession)
+    oldEnterSession[`${time}`] = enterData
+    window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldEnterSession))
   },
   beforeRouteLeave (to, from, next) {
     const leaveSession = window.sessionStorage.getItem('fuliaoLiveSession')

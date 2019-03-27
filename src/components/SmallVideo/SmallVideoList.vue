@@ -19,7 +19,8 @@ export default {
   },
   data () {
     return {
-      smallVideoList: []
+      smallVideoList: [],
+      scrollTop: 0
     }
   },
   methods: {
@@ -53,7 +54,11 @@ export default {
   mounted () {
   },
   beforeRouteLeave (to, from, next) {
+    this.scrollTop = this.$el.getElementsByClassName('small-video-list-content')[0].scrollTop
     next()
+  },
+  activated () {
+    this.$el.getElementsByClassName('small-video-list-content')[0].scrollTop = this.scrollTop
   },
   meta () {
     return {

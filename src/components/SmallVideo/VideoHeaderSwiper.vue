@@ -1,7 +1,7 @@
 <template>
   <swiper class="video-header-swiper" :options="swiperOption" ref="mySwiper">
     <swiper-slide v-for="(item, index) of activity" :key="index">
-        <div class="name">#{{item}}#</div>
+        <div class="name"><span style="color: orange">#&nbsp;</span>{{item}}<span style="color: orange">&nbsp;#</span></div>
         <div class="bg">
           <img v-for="(item, index) in bgs" :key="index" :src="item" class="bg-item" >
         </div>
@@ -15,7 +15,7 @@ export default {
   data () {
     return {
       swiperOption: {
-        // autoplay: true,
+        autoplay: true,
         loop: true
       },
       activity: [
@@ -67,7 +67,7 @@ export default {
       text-align: center;
       line-height: calc(1rem - 4vw);
       z-index: 3;
-      background-color: rgba(0, 0, 0, .6);
+      background-color: rgba(0, 0, 0, .4);
       color: #fff;
       font-weight: bold;
     }

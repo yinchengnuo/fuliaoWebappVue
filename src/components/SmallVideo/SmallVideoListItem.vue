@@ -1,9 +1,13 @@
 <template>
   <div class="small-video-list-item" @click="toVideo" :style="{ background: 'url(' + videoInfo.cover + ') no-repeat center', backgroundSize: '32vw'}">
       <span class="hot" v-if="index === 0 || index === 1 || index === 2">热门</span>
-      <Play class="play"></Play>
-      <Liked class="liked"></Liked>
-      <span class="liked-num">{{videoInfo.like_num}}</span>
+      <div class="play-shadow">
+        <Play class="play"></Play>
+      </div>
+      <div class="like-shadow">
+        <Liked class="liked"></Liked>
+         <span class="liked-num">{{videoInfo.like_num}}</span>
+      </div>
   </div>
 </template>
 
@@ -29,7 +33,6 @@ export default {
       } else if (this.$route.name === 'SmallVideoList') {
         name = 'VideoOne'
       }
-      console.log(this.$router)
       this.$router.push({
         name,
         params: { videoInfo: this.videoInfo }
@@ -61,12 +64,22 @@ export default {
         color: #fff;
     }
     .liked {
-        .wrapper(@width: 4vw; @height: 4vw; @left: 2vw; @top: auto; @bottom: 2vw;);
+        .wrapper(@width: 4vw; @height: 4vw; @left: 2vw; @top: 2vw;);
         .iconfont(4vw);
         color: #fff;
     }
+    .play-shadow {
+      .wrapper(@height: 14vw;);
+      border-radius: 8px;
+      background: linear-gradient(rgba(0, 0, 0, .7), rgba(255, 255, 255, 0));
+    }
+    .like-shadow {
+      .wrapper(@top: auto; @bottom: 0; @height: 8vw;);
+      border-radius: 8px;
+      background: linear-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, .7));
+    }
     .liked-num {
-        .wrapper(@width: auto; @height: 4vw; @left: 6vw; @top: auto; @bottom: 2vw;);
+        .wrapper(@width: auto; @height: 4vw; @left: 6vw; @top: 2vw;);
         color: #fff;
     }
 }

@@ -50,14 +50,12 @@ export default {
     })
     next()
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      const itemArr = Array.from(vm.$el.getElementsByClassName('live-swiper-content'))
-      for (let i = 0; i < vm.scrollers.length; i++) {
-        itemArr[i].scrollTop = +vm.scrollers[i]
-      }
-      vm.scrollers = []
-    })
+  activated () {
+    const itemArr = Array.from(this.$el.getElementsByClassName('live-swiper-content'))
+    for (let i = 0; i < this.scrollers.length; i++) {
+      itemArr[i].scrollTop = +this.scrollers[i]
+    }
+    this.scrollers = []
   },
   meta () {
     return {

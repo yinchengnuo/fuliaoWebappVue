@@ -2,11 +2,13 @@
   <div class="live-info">
       <div class="top" ref="top">
           <div class="user-info" ref="userInfo">
-              <div class="user-pic" @click="toUserIndex" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '100%'}"></div>
+              <div class="user-pic" @click="toUserIndex">
+                <img :src="userInfo.userpic" class="pic">
+              </div>
               <div class="user-name" @click="toUserIndex">{{userInfo.name}}</div>
               <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="focus" >关注</a>
           </div>
-          <div class="people" v-show="!liveEnded" :style="{ width: width + 'px' }">
+          <div class="people" v-if="!liveEnded" :style="{ width: width + 'px' }">
             <div class="people-pic" v-for="(item, index) in poepleNum" :style="{ background: 'url(' + watcherInfo.userpic + ') no-repeat center', backgroundSize: '100%'}" :key="index" @click="showPeople(watcherInfo, index)">
               <div class="vlevel">V4</div>
             </div>
@@ -61,6 +63,11 @@ export default {
           height: 8vw;
           border-radius: 50%;
           margin-left: 1px;
+          overflow: hidden;
+          .pic {
+            width: 100%;
+            height: 100%;
+          }
         }
         .user-name {
           float: left;
@@ -107,7 +114,6 @@ export default {
   .bottom {
     .wrapper(@height: 8vw; @top: auto; @bottom: 0;);
     .id {
-      float: right;
       line-height: 8vw;
       color: #fff;
     }

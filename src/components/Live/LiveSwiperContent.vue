@@ -27,8 +27,7 @@ export default {
     return {
       height: 0,
       scrollTop: 0,
-      animationSize: 234,
-      showWatchMore: false
+      animationSize: 234
     }
   },
   methods: {
@@ -86,9 +85,6 @@ export default {
   },
   mounted () {
     this.height = this.$refs.scroller.offsetHeight
-    setTimeout(() => {
-      this.showWatchMore = true
-    }, 666)
   }
 }
 </script>
