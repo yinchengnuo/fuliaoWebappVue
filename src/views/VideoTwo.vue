@@ -4,7 +4,7 @@
     <video v-show="show" ref="player" :src="videoInfo.url" :class="(Quark || Baidu) ? 'video-player scroll-video-player': scrollTop > 20 ? 'video-player scroll-video-player' : 'video-player'"></video>
     <div class="videopic" :style="{ background: 'url(' + videoInfo.cover + ') no-repeat center', backgroundSize: '100%'}">
       <VideoHeadCover v-if="videoEnded" @replay="play" @more="more"></VideoHeadCover>
-      <RoomInfo :userInfo="userInfo" liveEnded="1"></RoomInfo>
+      <RoomInfo @toUserIndex="toUserIndex" :userInfo="userInfo" liveEnded="1"></RoomInfo>
       <Play class="play-video" @clicked="play"></Play>
       <div class="video-des">{{videoInfo.name}}</div>
       <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="chat-with">和TA聊聊&gt; </a>

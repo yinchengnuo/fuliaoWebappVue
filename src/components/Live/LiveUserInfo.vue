@@ -21,10 +21,10 @@ export default {
 @keyframes rotated
 {
     from {
-        transform: rotateZ(0deg)
-    }
-    from {
         transform: rotateZ(-360deg)
+    }
+    to {
+        transform: rotateZ(0)
     }
 }
 .live-user-info {

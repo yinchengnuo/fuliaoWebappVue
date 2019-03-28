@@ -35,7 +35,7 @@ export default new Router({
         {
           path: 'videochat',
           name: 'VideoChat',
-          component: () => import('./components/Videochat/RobotChat.vue'),
+          component: () => import('./components/Videochat/VideoChatList.vue'),
           meta: {
             index: 0.3
           }
