@@ -22,6 +22,10 @@ export default {
         this.transitionName = 'slide-left'
       } else if (to.name === 'LiveThr' && from.name === 'LiveOne') {
         this.transitionName = 'slide-right'
+      } else if (from.name === 'VideoThr' && to.name === 'VideoOne') {
+        this.transitionName = 'slide-left'
+      } else if (to.name === 'VideoThr' && from.name === 'VideoOne') {
+        this.transitionName = 'slide-right'
       } else if (from.name === null) {
         this.transitionName = ''
       } else {

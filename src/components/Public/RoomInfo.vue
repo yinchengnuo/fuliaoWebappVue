@@ -47,9 +47,12 @@ export default {
 
 <style lang="less" scroped>
 .live-info {
-  .wrapper(@height: 16vw; @left: 2vw; @top: 2vw; @width: 96vw;);
+  .wrapper(@height: 20vw;);
+  box-sizing: border-box;
+  padding: 2vw;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0));
   .top {
-      .wrapper(@height: 8vw;);
+      .wrapper(@height: 8vw; @left: 2vw; @width: 96vw; @top: 2vw;);
       .user-info {
         position: relative;
         float: left;
@@ -112,7 +115,7 @@ export default {
       }
   }
   .bottom {
-    .wrapper(@height: 8vw; @top: auto; @bottom: 0;);
+    .wrapper(@height: 8vw; @top: auto; @bottom: 2vw; @left: 2vw; @width: 96vw;);
     .id {
       line-height: 8vw;
       color: #fff;

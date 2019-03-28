@@ -53,7 +53,7 @@ export default {
   data () {
     return {
       userInfo: this.$route.params.userInfo ? this.$route.params.userInfo : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].userInfo,
-      scrollTop: 0,
+      scrollTop: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].scrollTop,
       activeClass: this.$route.params.userInfo ? 0 : JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].activeClass,
       recommendUserInfo: {
         '热门直播': [],
@@ -109,9 +109,7 @@ export default {
     }
   },
   mounted () {
-    if (!this.$route.params.userInfo) {
-      this.$refs.scroller.scrollTop = JSON.parse(window.sessionStorage.getItem('fuliaoLiveSession'))[`${window.history.state.time}`].scrollTop
-    }
+    this.$refs.scroller.scrollTop = this.scrollTop
     this.width = document.body.offsetWidth
     this.app = document.body.offsetWidth * 3 - this.$refs.scroller.offsetHeight + 30
     this.$refs.player.addEventListener('ended', () => {
@@ -163,7 +161,7 @@ export default {
     const oldLeaveSession = JSON.parse(leaveSession)
     oldLeaveSession[`${this.time}`].recommendUserInfo = this.recommendUserInfo
     oldLeaveSession[`${this.time}`].activeClass = this.activeClass
-    oldLeaveSession[`${this.time}`].scrollTop = this.$refs.scroller.scrollTop
+    oldLeaveSession[`${this.time}`].scrollTop = this.scrollTop
     window.sessionStorage.setItem('fuliaoLiveSession', JSON.stringify(oldLeaveSession))
     next()
   },

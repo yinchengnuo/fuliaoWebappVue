@@ -7,8 +7,9 @@
       <WatchMore name="热门小视频"></WatchMore>
     </swiper-slide>
     <swiper-slide class="item">
-        2333
-        <WatchMore name="活动小视频"></WatchMore>
+        <SmallVideoListItem v-for="(item, index) in recommendVideoInfo['最新视频']" :key="index" :videoInfo="item" :index="index"></SmallVideoListItem>
+        <div class="white"></div>
+        <WatchMore name="最新小视频"></WatchMore>
     </swiper-slide>
   </swiper>
 </template>

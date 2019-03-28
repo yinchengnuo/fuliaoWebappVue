@@ -1,7 +1,7 @@
 <template>
   <div class="video-header">
       <VideoHeaderSwiper></VideoHeaderSwiper>
-      <a class="join">查看活动</a>
+      <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="join">查看活动</a>
   </div>
 </template>
 

@@ -39,14 +39,7 @@ export default {
         require('../../assets/images/20.jpg'),
         require('../../assets/images/21.jpg'),
         require('../../assets/images/22.jpg'),
-        require('../../assets/images/23.jpg'),
-        require('../../assets/images/24.jpg'),
-        require('../../assets/images/25.jpg'),
-        require('../../assets/images/26.jpg'),
-        require('../../assets/images/27.jpg'),
-        require('../../assets/images/28.jpg'),
-        require('../../assets/images/29.jpg'),
-        require('../../assets/images/30.jpg')
+        require('../../assets/images/23.jpg')
       ]
     }
   },

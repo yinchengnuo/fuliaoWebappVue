@@ -2,20 +2,20 @@
   <div class="small-video-list">
     <Header class="header" name="小视频"></Header>
     <SmallVideoSwiper></SmallVideoSwiper>
-    <SmallVideoListCentent></SmallVideoListCentent>
+    <SmallVideoListContent></SmallVideoListContent>
   </div>
 </template>
 
 <script>
 import Header from '../Public/Header'
 import SmallVideoSwiper from './SmallVideoSwiper'
-import SmallVideoListCentent from './SmallVideoListCentent'
+import SmallVideoListContent from './SmallVideoListContent'
 export default {
   name: 'LiveThr',
   components: {
     Header,
     SmallVideoSwiper,
-    SmallVideoListCentent
+    SmallVideoListContent
   },
   data () {
     return {
