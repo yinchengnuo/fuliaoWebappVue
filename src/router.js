@@ -100,17 +100,17 @@ export default new Router({
       }
     },
     {
-      path: '/uesrindex',
-      name: 'UserIndex',
-      component: () => import('./views/UserIndex.vue'),
+      path: '/videochat',
+      name: 'VideoChat',
+      component: () => import('./views/VideoChat.vue'),
       meta: {
         index: 3
       }
     },
     {
-      path: '/videointroduction',
-      name: 'VideoIntroduction',
-      component: () => import('./views/VideoIntroduction.vue'),
+      path: '/uesrindex',
+      name: 'UserIndex',
+      component: () => import('./views/UserIndex.vue'),
       meta: {
         index: 4
       }

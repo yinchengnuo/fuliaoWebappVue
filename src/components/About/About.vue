@@ -10,18 +10,22 @@
           <div class="page-name index-name">{{item.pageName}}</div>
           <div class="page-des index-des">{{ item.pageDes.split('0')[0] }} <ICountUp class="num" :endVal="endVal"></ICountUp> {{ item.pageDes.split('0')[1] }}</div>
           <transition name="download">
-            <a v-if="enter" class="download index-download" href="http://down.ipaychat.com/echat.apk">免费下载富聊</a>
+            <a v-if="enter" class="download index-download" :href="ios ? 'http://www.ipaychat.com/index_m_new.html' : 'http://down.ipaychat.com/echat.apk'">免费下载富聊</a>
           </transition>
           <img :src="item.pageImg" class="page-img index-img">
         </div>
         <div v-if="index != 0" class="page-name">{{item.pageName}}</div>
         <div v-if="index != 0" class="page-des">{{item.pageDes}}</div>
         <img v-if="index != 0" :src="item.pageImg" class="page-img">
-        <a v-if="index != 0" class="download" href="http://down.ipaychat.com/echat.apk">免费下载富聊</a>
+        <a v-if="index != 0" class="download" :href="ios ? 'http://www.ipaychat.com/index_m_new.html' : 'http://down.ipaychat.com/echat.apk'">免费下载富聊</a>
         <div v-if="index < 4" class="down">↓</div>
       </div>
     </swiper-slide>
   </swiper>
+  <img @click="showErweima" src="../../assets/images/kefuimg.png" class="kefu">
+  <div v-show="showCover" @click="hideErweima" class="cover">
+    <img src="../../assets/images/erweima.jpg" @click.stop="1" alt="" class="erweima">
+  </div>
 </div>
 </template>
 
@@ -32,13 +36,23 @@ export default {
   components: {
     ICountUp
   },
+  methods: {
+    showErweima () {
+      this.showCover = true
+    },
+    hideErweima () {
+      this.showCover = false
+    }
+  },
   data () {
     return {
       endVal: 0,
       swiperOption: {
         direction: 'vertical'
       },
+      ios: window.navigator.userAgent.match(/iPhone/) ? 1 : 0,
       enter: false,
+      showCover: false,
       data: [
         {
           logo: require('../../assets/images/fuliaologo.png'),
@@ -84,8 +98,10 @@ export default {
     this.endVal = 0
     this.enter = false
   },
-  metaInfo: {
-    title: '关于富聊'
+  meta () {
+    return {
+      title: `关于富聊`
+    }
   }
 }
 </script>
@@ -158,6 +174,19 @@ export default {
         }
       }
     }
+  }
+  .kefu {
+    .wrapper(@width: 1rem; @height: auto; @left: auto; @right: 2vw;);
+    z-index: 1;
+  }
+  .erweima {
+    .wrapper(@width: 50vw; @height: auto; @left: 50%; @top: 50%;);
+    margin: -25vw 0 0 -25vw;
+  }
+  .cover {
+    .wrapper;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, .6);
   }
   .down {
     .wrapper(@position: fixed; @height: 1rem; @top: auto; @bottom: 0;);

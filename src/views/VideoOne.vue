@@ -243,7 +243,7 @@ export default {
       text-align: center;
       color: #fff;
       z-index: 1;
-      background: -webkit-gradient(linear, left top, right top, from(rgba(115, 255, 0, 0.9)), to(rgba(0, 153, 255, 0.7)));
+      background: linear-gradient(to right, rgba(115, 255, 0, 0.9), rgba(0, 153, 255, 0.7));
     }
   }
   .swiper-nav {

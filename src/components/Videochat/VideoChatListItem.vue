@@ -1,5 +1,5 @@
 <template>
-  <div @click="toTVLive" class="video-chat-list-item" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '47vw'}">
+  <div @click="toVideoChat" class="video-chat-list-item" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '47vw'}">
     <span class="info">
       <div class="top">
         <span class="name">{{ userInfo.name }}</span>
@@ -17,23 +17,10 @@
 <script>
 export default {
   name: 'VideoChatListItem',
-  props: ['userInfo', 'name'],
+  props: ['userInfo', 'index'],
   methods: {
-    toTVLive () {
-      let name = ''
-      if (this.$route.name === 'LiveOne') {
-        name = 'LiveTwo'
-      } else if (this.$route.name === 'LiveTwo') {
-        name = 'LiveThr'
-      } else if (this.$route.name === 'LiveThr') {
-        name = 'LiveOne'
-      } else if (this.$route.name === 'LiveList') {
-        name = 'LiveOne'
-      }
-      this.$router.push({
-        name,
-        params: { userInfo: this.userInfo }
-      })
+    toVideoChat () {
+      this.$emit('toVideoChat', this.index)
     }
   }
 }

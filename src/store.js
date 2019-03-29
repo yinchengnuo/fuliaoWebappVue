@@ -16,10 +16,10 @@ export default new Vuex.Store({
     caiyiPage: 1,
     meiliPage: 1,
     hangzhouPage: 1,
-    UserIndexScrollTop: 0,
-    UserIndexUserinfo: null,
-    liveHistory: [],
-    liveHistoryNum: 0,
+    tuijianLock: true,
+    caiyiLock: true,
+    meiliLock: true,
+    hangzhouLock: true,
     yinchengnuo: {
       sex: 1,
       status: 0,
@@ -48,52 +48,60 @@ export default new Vuex.Store({
   mutations: {
     get (state, channel) {
       if (channel === 'tuijian') {
-        if (state.tuijianPage) {
-          state.getMore = true
-          Axios.get(`http://39.96.73.206:8888/tuijian?page=${state.tuijianPage}`).then((response) => {
-            state.liveListInfo['推荐'] = state.liveListInfo['推荐'].concat(response.data.info)
-            state.getMore = false
-            state.tuijianPage++
-            if (response.data.info.length < 14) {
-              state.tuijianPage = 0
-            }
-          })
+        if (state.tuijianLock) {
+          state.tuijianLock = false
+          if (state.tuijianPage) {
+            Axios.get(`http://39.96.73.206:8888/tuijian?page=${state.tuijianPage}`).then((response) => {
+              state.liveListInfo['推荐'] = state.liveListInfo['推荐'].concat(response.data.info)
+              state.tuijianPage++
+              if (response.data.info.length < 14) {
+                state.tuijianPage = 0
+              }
+              state.tuijianLock = true
+            })
+          }
         }
       } else if (channel === 'caiyi') {
-        if (state.caiyiPage) {
-          state.getMore = true
-          Axios.get(`http://39.96.73.206:8888/caiyi?page=${state.caiyiPage}`).then((response) => {
-            state.liveListInfo['才艺'] = state.liveListInfo['才艺'].concat(response.data.info.channelList)
-            state.getMore = false
-            state.caiyiPage++
-            if (response.data.info.channelList.length < 14) {
-              state.caiyiPage = 0
-            }
-          })
+        if (state.caiyiLock) {
+          state.caiyiLock = false
+          if (state.caiyiPage) {
+            Axios.get(`http://39.96.73.206:8888/caiyi?page=${state.caiyiPage}`).then((response) => {
+              state.liveListInfo['才艺'] = state.liveListInfo['才艺'].concat(response.data.info.channelList)
+              state.caiyiPage++
+              if (response.data.info.channelList.length < 14) {
+                state.caiyiPage = 0
+              }
+              state.caiyiLock = true
+            })
+          }
         }
       } else if (channel === 'meili') {
-        if (state.meiliPage) {
-          state.getMore = true
-          Axios.get(`http://39.96.73.206:8888/meili?page=${state.meiliPage}`).then((response) => {
-            state.liveListInfo['魅力'] = state.liveListInfo['魅力'].concat(response.data.info)
-            state.getMore = false
-            state.meiliPage++
-            if (response.data.info.length < 14) {
-              state.meiliPage = 0
-            }
-          })
+        if (state.meiliLock) {
+          state.meiliLock = false
+          if (state.meiliPage) {
+            Axios.get(`http://39.96.73.206:8888/meili?page=${state.meiliPage}`).then((response) => {
+              state.liveListInfo['魅力'] = state.liveListInfo['魅力'].concat(response.data.info)
+              state.meiliPage++
+              if (response.data.info.length < 14) {
+                state.meiliPage = 0
+              }
+              state.meiliLock = true
+            })
+          }
         }
       } else if (channel === 'hangzhou') {
-        if (state.hangzhouPage) {
-          state.getMore = true
-          Axios.get(`http://39.96.73.206:8888/hangzhou?page=${state.hangzhouPage}`).then((response) => {
-            state.liveListInfo['杭州'] = state.liveListInfo['杭州'].concat(response.data.info)
-            state.getMore = false
-            state.hangzhouPage++
-            if (response.data.info.length < 14) {
-              state.hangzhouPage = 0
-            }
-          })
+        if (state.hangzhouLock) {
+          state.hangzhouLock = false
+          if (state.hangzhouPage) {
+            Axios.get(`http://39.96.73.206:8888/hangzhou?page=${state.hangzhouPage}`).then((response) => {
+              state.liveListInfo['杭州'] = state.liveListInfo['杭州'].concat(response.data.info)
+              state.hangzhouPage++
+              if (response.data.info.length < 14) {
+                state.hangzhouPage = 0
+              }
+              state.hangzhouLock = true
+            })
+          }
         }
       }
     }
