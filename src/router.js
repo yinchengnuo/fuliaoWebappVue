@@ -100,9 +100,9 @@ export default new Router({
       }
     },
     {
-      path: '/videochat',
-      name: 'VideoChat',
-      component: () => import('./views/VideoChat.vue'),
+      path: '/videochatlive',
+      name: 'VideoChatLive',
+      component: () => import('./views/VideoChatLive.vue'),
       meta: {
         index: 3
       }

@@ -2,7 +2,6 @@
 <div class="vidoe-chat-list">
     <Header name="视频聊"></Header>
     <div class="video-chat-list-content" @scroll="scroll" ref="scroller">
-      <video :src="testUrl" class="test" ref="testPlayer" muted></video>
       <div class="wrapper" ref="scrollerContent">
         <div class="header-pic"></div>
         <VideoChatListItem v-for="(item, index) in userInfo" :key="index" :userInfo="item" :index="index" @toVideoChat="toVideoChat"></VideoChatListItem>
@@ -11,7 +10,7 @@
       </div>
     </div>
     <ToTop v-show="scrollTop > 10" class="to-top" @clicked="toTop"></ToTop>
-    <transition name="fade">
+    <transition name="fade" @before-leave="beforeLeave">
       <div v-show="userLeaved" class="user-leaved">该用户视频聊已接通，当前不在坐等状态了哦~</div>
     </transition>
 </div>
@@ -38,9 +37,9 @@ export default {
       height: 0,
       animationSize: 234,
       getLock: true,
-      testUrl: '',
       userLeaved: false,
-      nowUserInfo: {}
+      nowUserInfo: {},
+      nowIndex: 0
     }
   },
   methods: {
@@ -85,10 +84,22 @@ export default {
       }
     },
     toVideoChat (index) {
+      this.nowIndex = index
       this.nowUserInfo = this.userInfo[index]
-      this.$refs.testPlayer.pause()
-      this.testUrl = this.nowUserInfo.streamurl.replace('rtmp', 'http') + '.m3u8'
-      this.$refs.testPlayer.play()
+      this.$http.get(this.nowUserInfo.streamurl.replace('rtmp', 'http') + '.m3u8').then(() => {
+        this.$router.push({
+          name: 'VideoChatLive',
+          params: { userInfo: this.nowUserInfo, index: this.nowIndex }
+        })
+      }).catch(() => {
+        this.userLeaved = true
+        setTimeout(() => {
+          this.userLeaved = false
+        }, 1000)
+      })
+    },
+    beforeLeave () {
+      this.userInfo.splice(this.nowIndex, 1)
     }
   },
   created () {
@@ -96,23 +107,16 @@ export default {
   },
   mounted () {
     this.height = this.$refs.scroller.offsetHeight
-    this.$refs.testPlayer.addEventListener('ended', () => {
-      this.testText = 'ended'
-      this.userLeaved = true
-      setTimeout(() => {
-        this.userLeaved = false
-      }, 1000)
-    })
-    this.$refs.testPlayer.addEventListener('error', () => {
-      this.testText = 'error'
-      this.userLeaved = true
-      setTimeout(() => {
-        this.userLeaved = false
-      }, 1000)
-    })
-    this.$refs.testPlayer.addEventListener('play', () => {
-      this.testText = 'play'
-    })
+  },
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = this.$el.getElementsByClassName('video-chat-list-content')[0].scrollTop
+    next()
+  },
+  activated () {
+    this.$el.getElementsByClassName('video-chat-list-content')[0].scrollTop = this.scrollTop
+    if (this.$route.params.index) {
+      this.userInfo.splice(this.$route.params.index, 1)
+    }
   },
   meta () {
     return {
@@ -127,7 +131,7 @@ export default {
   .wrapper(@height: calc(100% - 1rem););
   .video-chat-list-content {
     .test {
-      .wrapper(@height: auto;);
+      .wrapper(@height: 0; @width: 0;);
     }
     .wrapper(@top: @header-height; @height: calc(100% - @header-height); @overflow: scroll;);
     .header-pic {
@@ -155,10 +159,10 @@ export default {
     bottom: 30vw;
   }
   .user-leaved {
-    .wrapper(@width: 70vw; @height: 6vw; @top: 50%; @left: 15vw;);
+    .wrapper(@width: 64vw; @height: 6vw; @top: 50%; @left: 18vw;);
     z-index: 1;
     color: #fff;
-    font-size: 2vw;
+    font-size: 3vw;
     line-height: 6vw;
     text-align: center;
     border-radius: 8px;

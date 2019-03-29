@@ -28,6 +28,9 @@ export default {
         this.transitionName = 'slide-right'
       } else if (from.name === null) {
         this.transitionName = ''
+        if (to.name === 'VideoChatLive') {
+          this.$router.go(-1)
+        }
       } else {
         this.transitionName = to.meta.index > from.meta.index ? 'slide-left' : 'slide-right'
       }

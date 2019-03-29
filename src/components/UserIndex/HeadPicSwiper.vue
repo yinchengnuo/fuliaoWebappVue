@@ -52,9 +52,6 @@ export default {
       this.info = this.$route.params.userinfo
       this.swiper.updateSlides()
     }
-  },
-  metaInfo: {
-    title: '下载富聊APP-邀请TA视频聊-UU-Watch-看-我喜欢！'
   }
 }
 </script>

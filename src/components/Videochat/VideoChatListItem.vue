@@ -1,5 +1,6 @@
 <template>
-  <div @click="toVideoChat" class="video-chat-list-item" :style="{ background: 'url(' + userInfo.userpic + ') no-repeat center', backgroundSize: '47vw'}">
+  <div @click="toVideoChat" class="video-chat-list-item">
+    <img :src="userInfo.userpic" alt="" class="userpic">
     <span class="info">
       <div class="top">
         <span class="name">{{ userInfo.name }}</span>
@@ -28,6 +29,10 @@ export default {
 
 <style lang="less" scoped>
 .video-chat-list-item {
+  .userpic {
+    width: 47vw;
+    height: 47vw;
+  }
   .wrapper(@position: relative; @top: auto; @width: 47vw; @height: 47vw; );
   margin-left: 2vw;
   margin-bottom: 2vw;
