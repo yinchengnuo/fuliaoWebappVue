@@ -125,12 +125,12 @@ export default {
   },
   created () {
     const getRecommendUserInfo = () => {
-      this.$http.get(`http://39.96.73.206:8888/moretuijian`).then((response) => {
+      this.$http.get(`/moretuijian`).then((response) => {
         this.recommendUserInfo['热门直播'] = response.data.info.sort(() => {
           return Math.random() - 0.5
         }).slice(0, 8)
       })
-      this.$http.get(`http://39.96.73.206:8888/morecaiyi`).then((response) => {
+      this.$http.get(`/morecaiyi`).then((response) => {
         this.recommendUserInfo['才艺直播'] = response.data.info.channelList.sort(() => {
           return Math.random() - 0.5
         }).slice(0, 8)

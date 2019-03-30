@@ -51,7 +51,7 @@ export default {
     }
   },
   created () {
-    this.$http.get(`http://39.96.73.206:8888/smallvideolist`).then((response) => {
+    this.$http.get(`/smallvideolist`).then((response) => {
       const temp = []
       response.data.data.forEach(element => {
         if (element.name) {

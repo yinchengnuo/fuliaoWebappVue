@@ -72,7 +72,7 @@ export default {
       if (this.getLock) {
         this.getLock = false
         if (this.page) {
-          this.$http.get(`http://39.96.73.206:8888/videochatlist?page=${this.page}`).then((response) => {
+          this.$http.get(`/videochatlist?page=${this.page}`).then((response) => {
             this.userInfo = this.userInfo.concat(response.data.info)
             this.page++
             if (response.data.info.length < 1) {

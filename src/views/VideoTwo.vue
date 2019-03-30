@@ -127,14 +127,14 @@ export default {
     const getRecommendVideoInfo = () => {
       const idSession = window.sessionStorage.getItem('fuliaoVideoSession')
       const idobj = JSON.parse(idSession)
-      this.$http.get(`http://39.96.73.206:8888/smallvideoinfo?id=${idobj[`${this.time}`].videoInfo.feed_id}`).then((response) => {
+      this.$http.get(`/smallvideoinfo?id=${idobj[`${this.time}`].videoInfo.feed_id}`).then((response) => {
         const user = {}
         user.name = response.data.data.feed_info.user.nick
         user.userid = response.data.data.feed_info.user.id
         user.userpic = response.data.data.feed_info.user.portrait
         this.userInfo = user
       })
-      this.$http.get(`http://39.96.73.206:8888/smallvideolist`).then((response) => {
+      this.$http.get(`/smallvideolist`).then((response) => {
         const temp = []
         response.data.data.forEach(element => {
           if (element.name) {

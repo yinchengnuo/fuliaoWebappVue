@@ -51,7 +51,7 @@ export default new Vuex.Store({
         if (state.tuijianLock) {
           state.tuijianLock = false
           if (state.tuijianPage) {
-            Axios.get(`http://39.96.73.206:8888/tuijian?page=${state.tuijianPage}`).then((response) => {
+            Axios.get(`/tuijian?page=${state.tuijianPage}`).then((response) => {
               state.liveListInfo['推荐'] = state.liveListInfo['推荐'].concat(response.data.info)
               state.tuijianPage++
               if (response.data.info.length < 14) {
@@ -65,7 +65,7 @@ export default new Vuex.Store({
         if (state.caiyiLock) {
           state.caiyiLock = false
           if (state.caiyiPage) {
-            Axios.get(`http://39.96.73.206:8888/caiyi?page=${state.caiyiPage}`).then((response) => {
+            Axios.get(`/caiyi?page=${state.caiyiPage}`).then((response) => {
               state.liveListInfo['才艺'] = state.liveListInfo['才艺'].concat(response.data.info.channelList)
               state.caiyiPage++
               if (response.data.info.channelList.length < 14) {
@@ -79,7 +79,7 @@ export default new Vuex.Store({
         if (state.meiliLock) {
           state.meiliLock = false
           if (state.meiliPage) {
-            Axios.get(`http://39.96.73.206:8888/meili?page=${state.meiliPage}`).then((response) => {
+            Axios.get(`/meili?page=${state.meiliPage}`).then((response) => {
               state.liveListInfo['魅力'] = state.liveListInfo['魅力'].concat(response.data.info)
               state.meiliPage++
               if (response.data.info.length < 14) {
@@ -93,7 +93,7 @@ export default new Vuex.Store({
         if (state.hangzhouLock) {
           state.hangzhouLock = false
           if (state.hangzhouPage) {
-            Axios.get(`http://39.96.73.206:8888/hangzhou?page=${state.hangzhouPage}`).then((response) => {
+            Axios.get(`/hangzhou?page=${state.hangzhouPage}`).then((response) => {
               state.liveListInfo['杭州'] = state.liveListInfo['杭州'].concat(response.data.info)
               state.hangzhouPage++
               if (response.data.info.length < 14) {
