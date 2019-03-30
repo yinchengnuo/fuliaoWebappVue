@@ -1,10 +1,9 @@
 import Vue from 'vue'
-import axios from 'axios'
+import Axios from 'axios'
 import store from './store'
-import Meta from 'vue-meta'
+import VueMeta from 'vue-meta'
 import router from './router'
-import VueAxios from 'vue-axios'
-// import FastClick from 'fastclick'
+import FastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 import 'swiper/dist/css/swiper.css'
@@ -14,12 +13,12 @@ import './assets/styles/iconfont.css'
 import App from './App.vue'
 import Error from './views/Error.vue'
 
-Vue.use(Meta, {
+Vue.use(VueMeta, {
   keyName: 'meta'
 })
-Vue.use(VueAxios, axios)
+Vue.prototype.$http = Axios
 Vue.use(VueAwesomeSwiper)
-// FastClick.attach(document.body)
+FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 if (document.body.offsetWidth > 768) {

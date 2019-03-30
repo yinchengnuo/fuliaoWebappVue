@@ -1,8 +1,8 @@
 <template>
-<div class="vidoe-chat-live">
-    <Header :name="userInfo.name"></Header>
+<div class="vidoe-introduction">
+    <Header :name="userInfo.name + '的视频介绍'"></Header>
     <Play class="play" @clicked="play"></Play>
-    <video v-show="show" :src="userInfo.hqStreamUrl.replace('rtmp', 'http') + '.m3u8'" class="video-player" ref="player"></video>
+    <video src="http://www.ipaychat.com/images/home-video/02.mp4" class="video-player" ref="player" loop></video>
     <img :src="userInfo.userpic" class="bg">
     <div class="userinfo"  @click="toUserIndex">
       <img :src="userInfo.userpic" class="headerpic">
@@ -22,15 +22,13 @@
       <div class="top">邀TA视频聊</div>
       <div class="bottom">{{userInfo.videoenergy}}能量/分钟</div>
     </div>
-    <transition name="fade" @before-leave="beforeLeave">
-      <div v-show="userLeaved" class="user-leaved">该用户视频聊已接通，当前不在坐等状态了哦~</div>
-    </transition>
+    3423423
 </div>
 </template>
 
 <script>
-import Header from '../components/Public/Header'
-import Play from '../components/Public/IconFont/Play'
+import Header from '../Public/Header'
+import Play from '../Public/IconFont/Play'
 export default {
   name: 'VideoChatList',
   components: {
@@ -50,17 +48,8 @@ export default {
       this.show = true
       this.$refs.player.play()
     },
-    beforeLeave () {
-      this.$router.replace({
-        name: 'VideoChat',
-        params: { index: this.index }
-      })
-    },
     toUserIndex () {
-      this.$router.replace({
-        name: 'UserIndex',
-        params: { id: this.userInfo.videoRoomId }
-      })
+      this.$router.go(-1)
     },
     toAbout () {
       this.$router.replace({
@@ -68,30 +57,16 @@ export default {
       })
     }
   },
-  mounted () {
-    this.$refs.player.addEventListener('erroe', () => {
-      this.userLeaved = true
-      setTimeout(() => {
-        this.userLeaved = false
-      }, 3333)
-    })
-    this.$refs.player.addEventListener('ended', () => {
-      this.userLeaved = true
-      setTimeout(() => {
-        this.userLeaved = false
-      }, 3333)
-    })
-  },
   meta () {
     return {
-      title: `${this.userInfo.name}正在富聊坐等你来视频聊`
+      title: `甜心柠的视频价绍`
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.vidoe-chat-live {
+.vidoe-introduction {
     .wrapper;
     .play {
       .iconfont-play;
@@ -155,11 +130,5 @@ export default {
         line-height: 4vw;
       }
     }
-}
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 2s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 </style>

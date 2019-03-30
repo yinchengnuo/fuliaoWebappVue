@@ -28,7 +28,7 @@ export default {
         this.transitionName = 'slide-right'
       } else if (from.name === null) {
         this.transitionName = ''
-        if (to.name === 'VideoChatLive') {
+        if (to.name === 'VideoChatLive' || to.name === 'VideoIntroduction') {
           this.$router.go(-1)
         }
       } else {

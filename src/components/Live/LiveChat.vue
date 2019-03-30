@@ -1,11 +1,11 @@
 <template>
   <div class="live-chat">
-      <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">
+      <a @click="toAbout">
         <Comments class="item white"></Comments>
         <Leter class="item white"></Leter>
         <GiftColor class="item"></GiftColor>
       </a>
-      <a class="chat-with" href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">主播邀你来聊天> </a>
+      <a class="chat-with" @click="toAbout">主播邀你来聊天> </a>
   </div>
 </template>
 
@@ -19,6 +19,13 @@ export default {
     Comments,
     Leter,
     GiftColor
+  },
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
+    }
   }
 }
 </script>

@@ -22,10 +22,10 @@
           <span class="featurn">财气值：{{watcherInfo.featurn}}万</span>
       </div>
       <div class="bottom">
-          <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">
+          <a @click="toAbout">
             <span class="focus">关注</span>
           </a>
-          <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk">
+          <a @click="toAbout">
             <span class="it">@TA</span>
           </a>
           <a @click="toIndex">
@@ -53,6 +53,11 @@ export default {
     },
     close () {
       this.$emit('close')
+    },
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   }
 }

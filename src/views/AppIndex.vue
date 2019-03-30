@@ -1,8 +1,8 @@
 <template>
 <div class="app-index">
-  <div class="index-nav">
+  <div class="index-nav" ref="nav">
       <router-link class="nav-item live-list" to="/LiveList" replace tag="span">直播</router-link>
-      <router-link class="nav-item small-video" to="/SmallVideoList" tag="span">小视频</router-link>
+      <router-link class="nav-item small-video" to="/SmallVideoList" replace tag="span">小视频</router-link>
       <router-link class="nav-item robot-chat" to="/VideoChat" replace tag="span">视频聊</router-link>
       <router-link class="nav-item about-me" to="/About" replace tag="span">关于富聊</router-link>
     </div>
@@ -14,7 +14,20 @@
 
 <script>
 export default {
-  name: 'AppIndex'
+  name: 'AppIndex',
+  watch: {
+    '$route' (to, from) {
+      if (to.name === 'LiveList') {
+        this.$el.getElementsByClassName('live-list')[0].click()
+      } else if (to.name === 'SmallVideoList') {
+        this.$el.getElementsByClassName('small-video')[0].click()
+      } else if (to.name === 'VideoChat') {
+        this.$el.getElementsByClassName('robot-chat')[0].click()
+      } else if (to.name === 'About') {
+        this.$el.getElementsByClassName('about-me')[0].click()
+      }
+    }
+  }
 }
 </script>
 

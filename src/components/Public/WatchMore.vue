@@ -1,5 +1,5 @@
 <template>
-  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="watch-more">
+  <a @click="toAbout" class="watch-more">
     下载富聊APP, 看更多{{name === '杭州直播' ? '直播' : name}}>>>
   </a>
 </template>
@@ -7,7 +7,14 @@
 <script>
 export default {
   name: 'WatchMore',
-  props: ['name']
+  props: ['name'],
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
+    }
+  }
 }
 </script>
 

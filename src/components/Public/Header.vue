@@ -6,8 +6,7 @@
     </div>
     <div class="center" @click="toIndex">{{name}}</div>
     <a
-      href="http://down.ipaychat.com/echat.apk"
-      download="http://down.ipaychat.com/echat.apk"
+      @click="toAbout"
       class="right"
     >下载APP</a>
     <div v-if="name === '富聊小视频'" class="left-right">上下滑动切换小视频，左划查看用户信息，右划查看小视频信息。现在下载富聊APP，不仅能观看更多小视频和美女直播，更会获得价值5万能量的新人大礼包。赶快点击下载和美女互动吧！！！</div>
@@ -17,10 +16,19 @@
 <script>
 export default {
   name: 'Header',
-  props: ['name'],
+  props: ['name', 'to'],
   methods: {
     toIndex () {
-      this.$router.push('/')
+      if (this.to) {
+        this.$router.push({
+          name: this.to
+        })
+      }
+    },
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   }
 }

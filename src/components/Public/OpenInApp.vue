@@ -1,12 +1,19 @@
 <template>
-  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="open-in-app">
+  <a @click="toAbout" class="open-in-app">
     APP内打开
   </a>
 </template>
 
 <script>
 export default {
-  name: 'OpenIApp'
+  name: 'OpenIApp',
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
+    }
+  }
 }
 </script>
 

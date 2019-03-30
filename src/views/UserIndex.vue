@@ -1,13 +1,13 @@
 <template>
     <div class="user-index" @scroll="scroll">
       <Back class="back"  @clicked="back" :style="{ opacity: -0.1 + (top / headheight)}"></Back>
-      <Header class="header" v-show="top < (headheight * 0.6)" :name="userinfo.name" :style="{ opacity: 1.1 - (top / headheight)}"></Header>
+      <Header class="header" v-show="top < (headheight * 0.6)" :name="userInfo.name" :style="{ opacity: 1.1 - (top / headheight)}"></Header>
       <div class="headpic" :style="{ transform: 'translateY(' + computedTop + 'px)'}">
-        <HeadPicSwiper :userinfo="userinfo"></HeadPicSwiper>
-        <NameSexLevel :userinfo="userinfo"></NameSexLevel>
-        <div v-if="userinfo.introduction" class="sign">{{userinfo.introduction}}</div>
+        <HeadPicSwiper :userInfo="userInfo"></HeadPicSwiper>
+        <NameSexLevel :userInfo="userInfo"></NameSexLevel>
+        <div v-if="userInfo.introduction" class="sign">{{userInfo.introduction}}</div>
       </div>
-      <UserIndexContent :userinfo="userinfo"></UserIndexContent>
+      <UserIndexContent :userInfo="userInfo"></UserIndexContent>
       <VideoChatButton></VideoChatButton>
     </div>
 </template>
@@ -36,7 +36,7 @@ export default {
       },
       headheight: 0,
       top: document.body.offsetWidth,
-      userinfo: {
+      userInfo: {
         name: '甜心柠',
         sex: 0,
         headpic: [

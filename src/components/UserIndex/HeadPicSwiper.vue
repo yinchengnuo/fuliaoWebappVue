@@ -11,13 +11,13 @@
 import Play from '../Public//IconFont/Play'
 export default {
   name: 'HeadPicSwiper',
-  props: ['userinfo'],
+  props: ['userInfo'],
   components: {
     Play
   },
   data () {
     return {
-      info: this.userinfo,
+      info: this.userInfo,
       swiperOption: {
         loop: true,
         watchOverflow: true,
@@ -38,18 +38,21 @@ export default {
   },
   methods: {
     toVideoIntro () {
+      this.userInfo.videoRoomId = 2630778
+      this.userInfo.charmlevel = 9
+      this.userInfo.userpic = 'http://img2.ipaychat.com/d3/photos/2019/03/25/19/pic_1553512580885_3d84976b-062f-44e8-b324-cefc88dedf41_org.jpg@!fc_640_640'
+      this.userInfo.city = '杭州市'
       this.$router.push({
         name: 'VideoIntroduction',
         params: {
-          videointroduction: this.userinfo.videointropath,
-          name: this.userinfo.name
+          userInfo: this.userInfo
         }
       })
     }
   },
   activated () {
-    if (this.$route.params.userinfo) {
-      this.info = this.$route.params.userinfo
+    if (this.$route.params.userInfo) {
+      this.info = this.$route.params.userInfo
       this.swiper.updateSlides()
     }
   }

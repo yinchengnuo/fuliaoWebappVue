@@ -8,7 +8,7 @@
               @click="change(index)"
             >{{item}}</li>
          </ul>
-         <UserinfoSwiper :userinfo="userinfo"></UserinfoSwiper>
+         <UserinfoSwiper :userInfo="userInfo" :activeClass="activeClass" :name="navlist" @slide="slider"></UserinfoSwiper>
     </div>
 </template>
 
@@ -16,7 +16,7 @@
 import UserinfoSwiper from './UserinfoSwiper'
 export default {
   name: 'UserIndexContent',
-  props: ['userinfo'],
+  props: ['userInfo'],
   components: {
     UserinfoSwiper
   },
@@ -24,6 +24,14 @@ export default {
     return {
       navlist: ['资料', '小视频', '动态'],
       activeClass: 0
+    }
+  },
+  methods: {
+    change (index) {
+      this.activeClass = index
+    },
+    slider (active) {
+      this.activeClass = active
     }
   }
 }

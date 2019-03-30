@@ -45,7 +45,7 @@ export default new Router({
           name: 'About',
           component: () => import('./components/About/About.vue'),
           meta: {
-            index: 0.4
+            index: 99
           }
         }
       ],
@@ -113,6 +113,14 @@ export default new Router({
       component: () => import('./views/UserIndex.vue'),
       meta: {
         index: 4
+      }
+    },
+    {
+      path: '/videointroduction',
+      name: 'VideoIntroduction',
+      component: () => import('./components/UserIndex/VideoIntroduction.vue'),
+      meta: {
+        index: 5
       }
     }
   ]

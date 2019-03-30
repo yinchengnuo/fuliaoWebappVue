@@ -1,14 +1,14 @@
 <template>
     <div class="name-sex-level">
         <div class="name-sex">
-            <span class="name item">{{userinfo.name}}</span>
-            <Mail v-if="userinfo.sex" class="mail item"></Mail>
+            <span class="name item">{{userInfo.name}}</span>
+            <Mail v-if="userInfo.sex" class="mail item"></Mail>
             <Femail v-else class="femail item"></Femail>
         </div>
         <div class="level">
-            <span class="nowlevel item">M{{userinfo.Mlevel}}</span>
-            <span v-if="userinfo.Mlevel > 5" class="hasfather item">出师</span>
-            <span class="maxlevel item">最高{{ userinfo.Mlevel >= userinfo.Vlevel ? 'M' : 'V' }}{{ userinfo.Mlevel >= userinfo.Vlevel ? userinfo.Mlevel : userinfo.Vlevel }}</span>
+            <span class="nowlevel item">M{{userInfo.Mlevel}}</span>
+            <span v-if="userInfo.Mlevel > 5" class="hasfather item">出师</span>
+            <span class="maxlevel item">最高{{ userInfo.Mlevel >= userInfo.Vlevel ? 'M' : 'V' }}{{ userInfo.Mlevel >= userInfo.Vlevel ? userInfo.Mlevel : userInfo.Vlevel }}</span>
         </div>
     </div>
 </template>
@@ -18,7 +18,7 @@ import Mail from '../Public/IconFont/Mail'
 import Femail from '../Public/IconFont/Femail'
 export default {
   name: 'NameSexLevel',
-  props: ['userinfo'],
+  props: ['userInfo'],
   components: {
     Femail,
     Mail

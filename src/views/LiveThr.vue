@@ -16,7 +16,7 @@
     </transition>
     <SwiperNav class="swiper-nav" :navlist="navlist" :activeClass="activeClass" @change="change"></SwiperNav>
     <LiveRecommendSwiper :activeClass="activeClass" :recommendUserInfo="recommendUserInfo" @slide="slider"></LiveRecommendSwiper>
-    <Header class="header" name="返回首页"></Header>
+    <Header class="header" name="返回首页" to="LiveList"></Header>
     <transition name="alert-app">
       <OpenInApp v-show="scrollTop > width * 0.3 && scrollTop < app"></OpenInApp>
     </transition>
@@ -105,7 +105,9 @@ export default {
       this.$refs.scroller.scrollTop = this.width
     },
     toUserIndex (userid) {
-      alert('toUserIndex ' + userid)
+      this.$router.push({
+        name: 'UserIndex'
+      })
     }
   },
   mounted () {

@@ -3,10 +3,10 @@
     <Header name="视频聊"></Header>
     <div class="video-chat-list-content" @scroll="scroll" ref="scroller">
       <div class="wrapper" ref="scrollerContent">
-        <div class="header-pic"></div>
+        <div class="header-pic" @click="toAbout"></div>
         <VideoChatListItem v-for="(item, index) in userInfo" :key="index" :userInfo="item" :index="index" @toVideoChat="toVideoChat"></VideoChatListItem>
         <TextLoading v-show="userInfo.length && page"></TextLoading>
-        <a v-show="!page" href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="watch-more">下载富聊APP, 和美女视频聊>>> </a>
+        <a v-show="!page" @click="toAbout" class="watch-more">下载富聊APP, 和美女视频聊>>> </a>
       </div>
     </div>
     <ToTop v-show="scrollTop > 10" class="to-top" @clicked="toTop"></ToTop>
@@ -100,6 +100,11 @@ export default {
     },
     beforeLeave () {
       this.userInfo.splice(this.nowIndex, 1)
+    },
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   },
   created () {
@@ -116,6 +121,13 @@ export default {
     this.$el.getElementsByClassName('video-chat-list-content')[0].scrollTop = this.scrollTop
     if (this.$route.params.index) {
       this.userInfo.splice(this.$route.params.index, 1)
+    }
+  },
+  watch: {
+    userInfo (n) {
+      if (n.length < 8) {
+        this.get()
+      }
     }
   },
   meta () {
@@ -166,7 +178,7 @@ export default {
     line-height: 6vw;
     text-align: center;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, .6)
+    background-color: rgba(0, 0, 0, .8)
   }
 }
 .fade-enter-active, .fade-leave-active {

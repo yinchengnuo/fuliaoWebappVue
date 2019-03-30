@@ -1,5 +1,5 @@
 <template>
-  <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="text-loading">
+  <a @click="toAbout" class="text-loading">
     加载中...
   </a>
 </template>
@@ -7,7 +7,14 @@
 <script>
 export default {
   name: 'text-loading',
-  props: ['name']
+  props: ['name'],
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <swiper class="video-header-swiper" :options="swiperOption" ref="mySwiper">
+  <swiper class="video-header-swiper" :options="swiperOption" ref="mySwiper" @click="toAbout">
     <swiper-slide v-for="(item, index) of activity" :key="index">
         <div class="name"><span style="color: orange">#&nbsp;</span>{{item}}<span style="color: orange">&nbsp;#</span></div>
         <div class="bg">
@@ -41,6 +41,13 @@ export default {
         require('../../assets/images/22.jpg'),
         require('../../assets/images/23.jpg')
       ]
+    }
+  },
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   },
   computed: {

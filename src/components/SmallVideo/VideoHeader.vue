@@ -1,7 +1,7 @@
 <template>
   <div class="video-header">
       <VideoHeaderSwiper></VideoHeaderSwiper>
-      <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="join">查看活动</a>
+      <a @click="toAbout" class="join">查看活动</a>
   </div>
 </template>
 
@@ -22,6 +22,13 @@ export default {
         '富聊好声音',
         '舞林争霸'
       ]
+    }
+  },
+  methods: {
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   }
 }

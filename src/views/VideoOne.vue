@@ -7,8 +7,8 @@
       <RoomInfo @toUserIndex="toUserIndex" :userInfo="userInfo" liveEnded="1"></RoomInfo>
       <Play class="play-video" @clicked="play"></Play>
       <div class="video-des">{{videoInfo.name}}</div>
-      <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="chat-with">和TA聊聊&gt; </a>
-      <div class="video-sociaty">
+      <a @click="toAbout" class="chat-with">和TA聊聊&gt; </a>
+      <div class="video-sociaty" @click="toAbout">
         <Liked class="icon"></Liked>
         <div class="num">{{videoInfo.like_num}}</div>
         <Comments class="icon"></Comments>
@@ -21,7 +21,7 @@
     </div>
     <SwiperNav class="swiper-nav" :navlist="navlist" :activeClass="activeClass" @change="change"></SwiperNav>
     <VideoRecommendSwiper :activeClass="activeClass" :recommendVideoInfo="recommendVideoInfo" @slide="slider"></VideoRecommendSwiper>
-    <Header class="header" name="返回首页"></Header>
+    <Header class="header" name="返回首页" to="SmallVideoList"></Header>
     <transition name="alert-app">
       <OpenInApp v-show="scrollTop > 20 && scrollTop < app"></OpenInApp>
     </transition>
@@ -104,7 +104,14 @@ export default {
       this.$refs.scroller.scrollTop = this.width + 50
     },
     toUserIndex (userid) {
-      alert('toUserIndex ' + userid)
+      this.$router.push({
+        name: 'UserIndex'
+      })
+    },
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   },
   mounted () {

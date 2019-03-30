@@ -6,7 +6,7 @@
                 <img :src="userInfo.userpic" class="pic">
               </div>
               <div class="user-name" @click="toUserIndex">{{userInfo.name}}</div>
-              <a href="http://down.ipaychat.com/echat.apk" download="http://down.ipaychat.com/echat.apk" class="focus" >关注</a>
+              <a @click="toAbout" class="focus" >关注</a>
           </div>
           <div class="people" v-if="!liveEnded" :style="{ width: width + 'px' }">
             <div class="people-pic" v-for="(item, index) in poepleNum" :style="{ background: 'url(' + watcherInfo.userpic + ') no-repeat center', backgroundSize: '100%'}" :key="index" @click="showPeople(watcherInfo, index)">
@@ -36,6 +36,11 @@ export default {
     },
     showPeople (watcherInfo, index) {
       this.$emit('showPeople', watcherInfo, index + 1)
+    },
+    toAbout () {
+      this.$router.push({
+        name: 'About'
+      })
     }
   },
   mounted () {
