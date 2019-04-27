@@ -39,7 +39,7 @@ export default {
       } else {
         this.animationSize = 234
       }
-      if (this.$refs.scrollerContent.offsetHeight - this.height - this.$refs.scroller.scrollTop < 0) {
+      if (this.$refs.scrollerContent.offsetHeight - this.height - this.$refs.scroller.scrollTop < 20) {
         if (this.name === '推荐') {
           this.$store.dispatch('getAsync', 'tuijian')
         } else if (this.name === '魅力') {

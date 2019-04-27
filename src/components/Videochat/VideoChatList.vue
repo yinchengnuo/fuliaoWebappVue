@@ -51,7 +51,7 @@ export default {
       } else {
         this.animationSize = 234
       }
-      if (this.$refs.scrollerContent.offsetHeight - this.height - this.$refs.scroller.scrollTop < 0) {
+      if (this.$refs.scrollerContent.offsetHeight - this.height - this.$refs.scroller.scrollTop < 20) {
         this.get()
       }
     },
